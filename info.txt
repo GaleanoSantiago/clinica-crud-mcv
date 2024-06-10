@@ -1,0 +1,6 @@
+al guardar un empleado debe:
+
+-guardar un registro en personas
+-guardar un registro en contactos
+-guardar un registro en direccion
+-guardar un registro en vacaciones??
