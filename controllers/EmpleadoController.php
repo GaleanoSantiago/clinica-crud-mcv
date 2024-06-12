@@ -49,7 +49,7 @@ function guardar($id_persona, $id_tipo_empleado, $id_vacacion) {
     $id = insertar($id_persona, $id_tipo_empleado, $id_vacacion);
     if ($id != false) {
         // header("Location:show.php?id=".$id."&msg=prodGuard");
-        header("Location:index.php");
+        header("Location:create.php?msg=emplGuard");
         // return $id;
     } else {
         // header("Location:create.php?msg=errorGuard");

@@ -23,12 +23,28 @@
     <section>
         <div class="container d-flex flex-column align-items-center">
             <h1 class="text-center">Guardar Empleado</h1>
+            <?php if(isset($_GET["msg"])=="emplGuard"): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Empleado</strong> guardado con exito en la base de datos.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php else: ?>
+                <div class=""></div>
+            <?php endif; ?>
             <form action="./functions.php" method="POST" autocomplete="off">
                 <!-- input controlado -->
                 <input type="hidden" name="insert">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre y Apellido</label>
                     <input type="text" name="nombre" id="" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="tipo_empleado" class="form-label">Tipo de Empleado</label>
+                    <select name="tipo_empleado" id="" class="form-select">
+                        <?php foreach($tipo_empleados as $tipo) :?>
+                            <option value="<?= $tipo["id_tipo_empleado"]?>"><?= $tipo["tipo_empleado"]?></option>
+                        <?php endforeach;?>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="cuit" class="form-label">Cuit</label>
@@ -60,17 +76,10 @@
                     <label for="" class="form-label">Correo Electronico</label>
                     <input type="email" name="email" id="" class="form-control">
                 </div>
-                <div class="mb-3">
-                    <label for="tipo_empleado" class="form-label">Tipo de Empleado</label>
-                    <select name="tipo_empleado" id="" class="form-select">
-                        <?php foreach($tipo_empleados as $tipo) :?>
-                            <option value="<?= $tipo["id_tipo_empleado"]?>"><?= $tipo["tipo_empleado"]?></option>
-                        <?php endforeach;?>
-                    </select>
-                </div>
+                
                 <div class="mb-3 d-flex justify-content-around">
                     <input type="submit" value="Guardar" class="btn btn-success">
-                    <input type="reset" value="Reset" class="btn btn-danger">
+                    <!-- <input type="reset" value="Reset" class="btn btn-danger"> -->
                     <a href="./index.php" class="btn btn-primary">Volver a la Lista</a>
                 </div>
             </form>
