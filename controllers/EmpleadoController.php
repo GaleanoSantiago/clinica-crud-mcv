@@ -45,6 +45,17 @@ function guardarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_con
     }
 }
 
+// Insertar Municipio
+function guardarMunicipio($nombre_municipio, $id_departamento) {
+    $id = insertarMunicipio($nombre_municipio, $id_departamento);
+    if ($id != false) {
+        return $id;
+    } else {
+        return "no se guardo el municipio";
+
+    }
+}
+
 function guardar($id_persona, $id_tipo_empleado, $id_vacacion) {
     $id = insertar($id_persona, $id_tipo_empleado, $id_vacacion);
     if ($id != false) {
@@ -69,6 +80,33 @@ function indexMunicipios() {
 
 function indexTipoEmpleados() {
     $result = indexTipoEmpleadosModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function indexDepartamentos(){
+    $result = indexDepartamentosModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function indexPaises(){
+    $result = indexPaisesModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function indexProvincias(){
+    $result = indexProvinciasModel();
     if ($result) {
         return $result;
     } else {

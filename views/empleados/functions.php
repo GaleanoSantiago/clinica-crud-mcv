@@ -21,6 +21,14 @@ function insertarEmpleado(){
     $id_rol_persona = limpiarcadena(2);
     $id_vacacion = limpiarcadena(1);
 
+    // Validar input del nuevo municipio dentro del modal
+    if($_REQUEST["new_municipio"]!=""){
+        
+        $new_municipio = $_REQUEST["new_municipio"];
+        $id_departamento = $_REQUEST["departamento_empleado"];
+        $municipio = guardarMunicipio($new_municipio, $id_departamento);
+    }
+
     // Guardar registro en contacto y obtener id_contacto
     $id_contacto = limpiarcadena(guardarContacto($email));
     // Guardar registro en direccion y obtener id_direccion
