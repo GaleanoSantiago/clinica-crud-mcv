@@ -55,16 +55,16 @@ function guardarMunicipio($nombre_municipio, $id_departamento) {
 
     }
 }
-
+// Guardar Empleado
 function guardar($id_persona, $id_tipo_empleado, $id_vacacion) {
     $id = insertar($id_persona, $id_tipo_empleado, $id_vacacion);
     if ($id != false) {
         // header("Location:show.php?id=".$id."&msg=prodGuard");
-        header("Location:create.php?msg=emplGuard");
-        // return $id;
+        // header("Location:create.php?msg=emplGuard");
+        return $id;
     } else {
         // header("Location:create.php?msg=errorGuard");
-        return "no se guardo el empleado";
+        return false;
 
     }
 }

@@ -5,6 +5,7 @@ const newMunicipioFromEmpleados = ()=>{
     const municipioSelect = document.getElementById('municipio');
     const modalTrigger = document.getElementById('modalTrigger');
     const newMunicipioInput = document.getElementById("new_municipio_input");
+    const newMuniSpan = document.getElementById("new_municipio_span");
 
     // Agregar un evento 'change' al elemento <select>
     municipioSelect.addEventListener('change', function() {
@@ -19,10 +20,14 @@ const newMunicipioFromEmpleados = ()=>{
 
             // Mostrar el botón del trigger modal
             modalTrigger.classList.remove("d-none");
+            newMuniSpan.classList.remove("d-none");
         } else {
             // Agregar la clase 'd-none' al botón del trigger modal
+            newMuniSpan.classList.add("d-none");
             modalTrigger.classList.add("d-none");
             newMunicipioInput.value="";
+            newMuniSpan.textContent = newMunicipioInput.value;
+
         }
     });
 
@@ -36,6 +41,12 @@ const newMunicipioFromEmpleados = ()=>{
             // Limpiar el campo DNI si el CUIT no tiene 11 dígitos
             document.getElementById('dniInput').value = '';
         }
+    });
+
+    // Agregar un evento 'input' al elemento input
+    newMunicipioInput.addEventListener('input', function() {
+        // Actualizar el contenido del span con el valor del input
+        newMuniSpan.textContent = `"${newMunicipioInput.value}"`;
     });
 }
 

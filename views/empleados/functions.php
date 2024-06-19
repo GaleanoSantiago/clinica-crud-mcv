@@ -2,8 +2,12 @@
 require_once("./../../controllers/EmpleadoController.php");
 
 
-if(isset($_REQUEST['insert'])){
-    insertarEmpleado();
+if(isset($_REQUEST['insertEmpleado'])){
+    $id = insertarEmpleado();
+    if($id != false){
+        header("Location:create.php?msg=emplGuard");
+
+    }
 }
 
 function insertarEmpleado(){
@@ -18,6 +22,7 @@ function insertarEmpleado(){
     $email = limpiarcadena($_POST["email"]);
     $id_tipo_empleado = limpiarcadena($_POST["tipo_empleado"]);
 
+    // Atributos no definidos adecuadamente aun
     $id_rol_persona = limpiarcadena(2);
     $id_vacacion = limpiarcadena(1);
 
@@ -38,16 +43,8 @@ function insertarEmpleado(){
 
     // Guardando empleado
     $id_empleado = guardar($id_persona, $id_tipo_empleado, $id_vacacion);
-
-
-    // echo $id_contacto;
-    // echo "<br>";
-    // echo $id_direccion;
-    // echo "<br>";
-    // echo $id_persona;
-    // echo "<br>";
-    // echo $id_empleado;
-
+    
+    return $id_empleado;
 };
 
 ?>
