@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardar Empleado</title>
+    <title>Guardar Medico</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -14,22 +14,25 @@
 <body>
     <?php
         require_once("./../../controllers/EmpleadoController.php");
+        require_once("./../../controllers/MedicoController.php");
         $municipios = indexMunicipios();
         $tipo_empleados = indexTipoEmpleados();
         $paises = indexPaises();
         $departamentos = indexDepartamentos();
         $provincias = indexProvincias();
-        // var_dump($provincias);
+        $especialidades = indexEspecialidad();
+        $situacion_revista = indexSituacionRevista();
+        // var_dump($situacion_revista);
         // echo "<br><br>";
         // var_dump($paises);
         // die();
     ?>
     <section>
         <div class="container d-flex flex-column align-items-center">
-            <h1 class="text-center">Guardar Empleado</h1>
-            <?php if(isset($_GET["msg"])=="emplGuard"): ?>
+            <h1 class="text-center">Guardar Medico</h1>
+            <?php if(isset($_GET["msg"])=="medGuard"): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Empleado</strong> guardado con exito en la base de datos.
+                    <strong>Medico</strong> guardado con exito en la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php else: ?>
@@ -37,12 +40,21 @@
             <?php endif; ?>
             <form action="./functions.php" method="POST" autocomplete="off" id="formEmpleados">
                 <!-- input controlado -->
-                <input type="hidden" name="insertEmpleado">
+                <input type="hidden" name="insertMedico">
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre y Apellido</label>
                             <input type="text" name="nombre" id="" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="situacion_revista" class="form-label">Situación Revista</label>
+                            <select name="situacion_revista" id="situacion_revista" class="form-select">
+                                <?php foreach($situacion_revista as $situ) :?>
+                                    <option value="<?= $situ["id_situacion_revista"]?>"><?= $situ["situacion_revista"]?></option>
+                                <?php endforeach;?>
+                                
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="cuit" class="form-label">Cuil 
@@ -74,12 +86,19 @@
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="mb-3">
-                            <label for="tipo_empleado" class="form-label">Tipo de Empleado</label>
-                            <select name="tipo_empleado" id="" class="form-select">
-                                <?php foreach($tipo_empleados as $tipo) :?>
-                                    <option value="<?= $tipo["id_tipo_empleado"]?>"><?= $tipo["tipo_empleado"]?></option>
+                            <label for="especialidad" class="form-label">Especialidad</label>
+                            <select name="especialidad" id="" class="form-select">
+                                <?php foreach($especialidades as $esp) :?>
+                                    <option value="<?= $esp["id_especialidad"]?>"><?= $esp["tipo_especialidad"]?></option>
                                 <?php endforeach;?>
                             </select>
+                        </div>
+                        <!-- Tipo de Empleado Medico -->
+                        <input type="hidden" name="tipo_empleado" id="" value="1">
+                        <!----------------------------->
+                        <div class="mb-3">
+                            <label for="num_colegiado" class="form-label">Numero de Colegiado</label>
+                            <input type="number" name="num_colegiado" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>

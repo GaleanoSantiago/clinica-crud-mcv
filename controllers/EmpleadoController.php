@@ -45,15 +45,26 @@ function guardarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_con
     }
 }
 
+// Insertar Municipio
+function guardarMunicipio($nombre_municipio, $id_departamento) {
+    $id = insertarMunicipio($nombre_municipio, $id_departamento);
+    if ($id != false) {
+        return $id;
+    } else {
+        return "no se guardo el municipio";
+
+    }
+}
+// Guardar Empleado
 function guardar($id_persona, $id_tipo_empleado, $id_vacacion) {
     $id = insertar($id_persona, $id_tipo_empleado, $id_vacacion);
     if ($id != false) {
         // header("Location:show.php?id=".$id."&msg=prodGuard");
-        header("Location:create.php?msg=emplGuard");
-        // return $id;
+        // header("Location:create.php?msg=emplGuard");
+        return $id;
     } else {
         // header("Location:create.php?msg=errorGuard");
-        return "no se guardo el empleado";
+        return false;
 
     }
 }
@@ -69,6 +80,33 @@ function indexMunicipios() {
 
 function indexTipoEmpleados() {
     $result = indexTipoEmpleadosModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function indexDepartamentos(){
+    $result = indexDepartamentosModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function indexPaises(){
+    $result = indexPaisesModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
+function indexProvincias(){
+    $result = indexProvinciasModel();
     if ($result) {
         return $result;
     } else {
