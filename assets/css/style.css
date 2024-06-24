@@ -5,7 +5,93 @@
     padding:0;
     box-sizing: border-box;
 }
+/* Variables */
+:root{
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning:#ffc107;
+    --bs-danger:#dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #6c757d;
+    --bs-gray-700: #495057;
+    --z1:#232741;
+    --z2:#2c2e43;
+    --darkBodyP:#181818;
+    --darkPretty: #333;
+    --darkPretty2:#222;
+    --yellowMostaza: #e8a900;
+    --bg-whiteBlue:#F0F0F0;
+    --bg-whiteSmooth:#FAFAFA;
+    --azulWhite: #f2f6fc;
+    --azulLight: #f6f8fc;
+    --azulLite: #eaf1fb;
+    --aL: #f5f6f7;
+    
+    --borders-light:#dbdbdb;
+    --lightBlue:#03a9f4;
 
+    /* Colores de whatsapp: */
+    --wa-1: #005c4b;
+    --wa-2: #44c554;
+    --wa-3: #128c7e;
+    /* Colores de famago */
+    --naranjaFamago:#f18e00;
+    --azulFamago:#003480;
+    --lightFamago:#f1f1f1;
+
+    --fa-1:#f18e00;
+    --fa-2:#003480;
+    --fa-3:#f1f1f1;
+
+    --fa-1-1:#f5a22e;
+    --gameLips:#be123c;
+
+    --bs-border: #dee2e6;
+
+    /* Naranja */
+
+    --reder:#E63946;
+    --orangeBright: #FF3C0C;
+    --orangeKiller:#EE6C4D;
+    --redSound: #E63946;
+    --redRoboto:#C72931;
+
+    /* Azul */
+
+    --blueSober: #264653;
+    --blueBright: #317AC7;
+    --blueRetro: #168AAD;
+    --blueSound: #457B9D;
+
+    /* Blanco */
+
+    --whiteGrant: #eef3ff;
+
+    /* Amarillo */
+    --yell-1: #f3d661;
+    --yell-2: #f2c84d;
+    --yell-3: #f5c043;
+    /* Negro */
+
+    --black1: #283035;
+    --black2: #303A40;
+    --black3: #354249;
+
+    /* Combinacion */
+    --comb1: #ff0054;
+    --comb2: #00002c;
+    --comb3: #001966;
+    --comb4: #eef3ff;
+
+    --gradient-1:linear-gradient(to bottom right, #f3d661, #f2c84d, #f5c043);
+
+    --bs-border: #dee2e6;
+}
 body{
     font-family: sans-serif;
     scroll-behavior: smooth;          
@@ -17,4 +103,60 @@ section{
 
 form,.alert{
     width:80%;
+}
+
+/* ----------------------------- Index.php Login ------------------------------- */
+#login-body{
+    background-color:var(--azulLight);  
+
+}
+.cont-login{
+    height:600px;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+/* .height-100{
+    min-height:100vh;
+} */
+#formLogin{
+    width:100%;
+}
+.login{
+    width:350px;
+    border:1px solid var(--bs-gray-400);
+    padding:30px 20px;
+    border-radius:7px;
+    background-color: var(--bs-white);
+    /* box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px; */
+    box-shadow:rgba(0, 0, 0, 0.1) 0px 0px 15px ;
+
+}
+.login-user-img{
+    text-align:center;
+}
+.login-user-img svg{
+    width:60% !important;
+}
+.login input{
+    background-color:var(--azulLight);  
+
+}
+.form-pass-div button{
+    width:50px;
+    border:1px solid var(--bs-gray-500);
+    border-radius:7px;
+    background-color:var(--azulLight);
+}
+.form-pass-div span{
+    cursor:pointer;
+}
+.form-pass-div svg{
+    width:100%;
+    fill:var(--azulLight) !important;
+}
+.login .btn{
+    width:100%;
+    padding:15px;
 }
