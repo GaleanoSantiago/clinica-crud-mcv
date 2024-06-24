@@ -1,14 +1,11 @@
 <?php
 require_once "./../../config/bd.php";
 
-function getConnection() {
-    $con = new db();
-    return $con->conexion();
-}
 
 function indexModel() {
     $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM empleados");
+    // $stament = $PDO->prepare("SELECT * FROM empleados");
+    $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto ORDER BY empleados.id_empleado");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 
@@ -58,6 +55,20 @@ function insertarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_co
     return ($stament->execute()) ? $PDO->lastInsertId() : false;
 }
 
+// Insertar Municipio
+function insertarMunicipio($nombre_municipio, $id_departamento) {
+    $PDO = getConnection();
+    $stament = $PDO->prepare(
+        "INSERT INTO municipios VALUES 
+        (NULL, :nombre_municipio, :id_departamento)"
+    );
+    
+    $stament->bindParam(":nombre_municipio", $nombre_municipio);
+    $stament->bindParam(":id_departamento", $id_departamento);
+    
+    return ($stament->execute()) ? $PDO->lastInsertId() : false;
+}
+
 // Insertar Empleados
 function insertar($id_persona, $id_tipo_empleado, $id_vacacion) {
     $PDO = getConnection();
@@ -87,9 +98,26 @@ function indexTipoEmpleadosModel() {
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 
+// Index de Departamentos
+function indexDepartamentosModel(){
+    $PDO = getConnection();
+    $stament = $PDO->prepare("SELECT * FROM departamentos");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
 
+// Index de Paises
+function indexPaisesModel(){
+    $PDO = getConnection();
+    $stament = $PDO->prepare("SELECT * FROM paises");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
 
-
+// Index de Provincias
+function indexProvinciasModel(){
+    $PDO = getConnection();
+    $stament = $PDO->prepare("SELECT * FROM provincias");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
 // ================================= Funciones que no se utlizan todavia =======================================
 function lastIdModel() {
     $PDO = getConnection();

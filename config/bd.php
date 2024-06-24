@@ -14,5 +14,8 @@
             }
         }
     }
-
+    function getConnection() {
+        $con = new db();
+        return $con->conexion();
+    }
 ?>

@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
+    <title>Medicos</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
+    <style>
+        table{
+            font-size:.9rem;
+        }
+    </style>
 </head>
 <body>
     <?php
-        require_once("./../../controllers/EmpleadoController.php");
-        $rows = index();
+        require_once("./../../controllers/MedicoController.php");
+        $rows = indexMedicos();
         // var_dump($rows);
         // die();
     ?>
@@ -27,12 +32,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Empleados</a>
+                            <a class="nav-link" href="./../empleados/index.php">Empleados</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
+                            <a class="nav-link active" aria-current="page" href="#">Medicos</a>
                         </li>
                         
                     </ul>
@@ -42,23 +47,25 @@
     </header>
     <section>
         <div class="container">
-            <h1 class="text-center">Empleados</h1>
+            <h1 class="text-center">Medicos</h1>
             <div class="mb-3">
-                <a href="./create.php" class="btn btn-success">Agregar Nuevo Empleado</a>
+                <a href="./create.php" class="btn btn-success">Agregar Nuevo Medico</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
                     <thead>
                         <tr>
+                            <th>ID Medico</th>
                             <th>ID Empleado</th>
-                            <th>ID Persona</th>
                             <th>Nombre y Apellido</th>
-                            <th>Tipo de Empleado</th>
+                            <th>Especialidad</th>
+                            <th>Situación Revista</th>
+                            <th>Número de Colegiado</th>
                             <th>CUIT</th>
                             <th>DNI</th>
                             <th>Municipio</th>
                             <th>Dirección</th>
-                            <th>Codigo Postal</th>
+                            <th>Código Postal</th>
                             <th>Contacto</th>
                         </tr>
                     </thead>
@@ -67,10 +74,12 @@
                         if($rows) :
                         foreach($rows as $row): ?>
                         <tr>
+                            <td><?= $row['id_medico']?></td>
                             <td><?= $row['id_empleado']?></td>
-                            <td><?= $row['id_persona']?></td>
                             <td><?= $row['nombre_persona']?></td>
-                            <td><?= $row['tipo_empleado']?></td>
+                            <td><?= $row['especialidad']?></td>
+                            <td><?= $row['situacion_revista']?></td>
+                            <td><?= $row['numero_colegiado']?></td>
                             <td><?= $row['cuit_persona']?></td>
                             <td><?= $row['dni_persona']?></td>
                             <td><?= $row['nombre_municipio']?></td>
