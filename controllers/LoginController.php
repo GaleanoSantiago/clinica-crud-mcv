@@ -1,5 +1,13 @@
 <?php
 require_once "./../../models/User.php";
+
+
+function LofinController(){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    return Authenticate($username,$password);
+}
+/*
 class LoginController {
     public function index() {
         require_once 'views/login/index.php';
@@ -33,4 +41,4 @@ class LoginController {
         return "<h1>LoginController imported</h1>";
     }
 }
-
+*/

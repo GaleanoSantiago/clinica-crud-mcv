@@ -1,13 +1,19 @@
 <?php
 
 require("../../controllers/LoginController.php");
-// $obj = new LoginController();
-// $import = $obj->authenticate()();
+ //$obj = new LoginController();
+ //$import = $obj->authenticate();
 
-echo $import;
+//echo $import;
+
+
 
 if(isset($_REQUEST['login'])){
-    header("Location: ./../../views/empleados/index.php");
-}else{
-
+    
+    if(LofinController()){
+        header("Location: ./../../views/empleados/index.php");
+    }else{
+        header("Location:index.php?msg=error");
+    }
 }
+
