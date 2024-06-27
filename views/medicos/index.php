@@ -37,6 +37,9 @@
                             <a class="nav-link" href="./../empleados/index.php">Empleados</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link " href="./../empleados/empleado_cargo.php">Empleados por Cargo</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Medicos</a>
                         </li>
                         
@@ -53,7 +56,7 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>ID Medico</th>
                             <th>ID Empleado</th>

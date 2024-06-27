@@ -15,6 +15,23 @@ function index() {
     }
 }
 
+function EmpleadosPorCargo() {
+    $result = EmpleadosPorCargoModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+function contEmpleadosPorCargo() {
+    $result = contEmpleadosPorCargoModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
 // insertar direccion
 function guardarDireccion($direccion, $cod_postal) {
     $id = insertarDireccion($direccion, $cod_postal);
