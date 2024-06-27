@@ -160,3 +160,8 @@ form,.alert{
     width:100%;
     padding:15px;
 }
+
+/* thead{
+    background:var(--bs-dark) !important; */
+    /* color:var(--bs-light) !important;
+} */
