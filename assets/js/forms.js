@@ -79,3 +79,28 @@ if(formLogin){
     btnMostrarPassword();
     
 }
+
+const btnFiltro = document.querySelectorAll(".btn-filtro") || null;
+const table = document.getElementById('myTable') || null;
+
+if(btnFiltro){
+    btnFiltro.forEach(btn => {
+
+        btn.style.cursor = "pointer";
+        btn.addEventListener("click", () => {
+            console.log(btn.innerText);
+    
+            // Iterar sobre todas las filas de la tabla, excepto la fila de encabezado
+            for (let i = 1; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const especialidad = row.cells[0].textContent.trim(); // Obtener el contenido de la celda "Especialidad"
+                row.style.display = '';
+                // Ocultar la fila si la especialidad es "Nefrologia"
+                if (especialidad != btn.innerText) {
+                    row.style.display = 'none';
+                }
+            }
+        })
+    })
+}
+

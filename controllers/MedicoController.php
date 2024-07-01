@@ -15,6 +15,22 @@ function indexMedicos() {
     }
 }
 
+function contMedicosPorEspecialidad() {
+    $result = contMedicosPorEspecialidadModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+function MedicosPorEspecialidad() {
+    $result = MedicosPorEspecialidadModel();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
 // index de Especialidad
 function indexEspecialidad() {
     $result = indexEspecialidadModel();

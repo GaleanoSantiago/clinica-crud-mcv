@@ -31,7 +31,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Clinica</a>
+                <a class="navbar-brand" href="./../dashboard/index.php">Clinica</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -55,6 +55,7 @@
     </header>
     <section>
         <div class="container">
+            <h1 class="text-center">Cargos</h1>
             <table class="table table-striped table-hover table-bordered">
                 <thead class="table-dark">
                     <tr>
@@ -68,7 +69,7 @@
                         if($rows) :
                         foreach($rows as $row): ?>
                         <tr>
-                            <td><?= $row['tipo_empleado']?></td>
+                            <td class="btn-filtro"><?= $row['tipo_empleado']?></td>
                             <td><?= $row['cantidad_registros']?></td>
                             
                             
@@ -82,8 +83,9 @@
                         <?php endif; ?>
                 </tbody>
             </table>
-
-            <table class="table table-striped table-hover table-bordered">
+            <h2 class="text-center">Empleados del Cargo</h2>
+            <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered" id="myTable">
                     <thead class="table-dark">
                         <tr>
                             <th>Cargo</th>
@@ -124,12 +126,14 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                </div>
         </div>
     </section>
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
+    <!-- JS Propios -->
+    <script src="./../../assets/js/forms.js"></script>
 </body>
 </html>

@@ -31,7 +31,31 @@
     </header>
     <div class="container">
         <h2 class="mt-5">Dashboard</h2>
-        
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="./../medicos/index.php">Informe de Medicos</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="./../empleados/index.php">Informe de Empleados</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                <a href="./../empleados/empleado_cargo.php">Informe de Cargo de los Empleados</a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                <a href="./../medicos/medico_especialidad.php">Informe de Especialidades de los Medicos</a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                <a href="#">Informe de Consultas de los Pacientes</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="#">Informe de Disponibilidad de Medicos</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="#">Informe de Periodos de Vacaciones</a>
+            </div>
+        </div>
         </div>
         <a href="<?php echo BASE_URL; ?>/login/logout" class="btn btn-danger">Logout</a>
     </div>
