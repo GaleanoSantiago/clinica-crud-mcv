@@ -8,7 +8,31 @@ function indexModel() {
     $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto ORDER BY empleados.id_empleado");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
-
+// Funcion para la lista de empleados agrupados por cargo
+function EmpleadosPorCargoModel() {
+    $PDO = getConnection();
+    // $stament = $PDO->prepare("SELECT * FROM empleados");
+    $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto ORDER BY tipos_empleado.tipo_empleado, empleados.id_empleado");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
+// Funcion para mostrar empleados por cargo 
+function contEmpleadosPorCargoModel(){
+    $PDO = getConnection();
+    $stament = $PDO->prepare("SELECT 
+        te.id_tipo_empleado,
+        te.tipo_empleado,
+        COUNT(e.id_empleado) AS cantidad_registros
+    FROM 
+        empleados e
+    INNER JOIN 
+        tipos_empleado te ON e.id_tipo_empleado = te.id_tipo_empleado
+    GROUP BY 
+        te.id_tipo_empleado, te.tipo_empleado
+    ORDER BY 
+        te.id_tipo_empleado;
+    ");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
 // Insertar direccion
 function insertarDireccion($direccion, $cod_postal){
     $PDO = getConnection();

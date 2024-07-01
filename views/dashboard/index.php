@@ -1,49 +1,61 @@
-<?php
-session_start();
-
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ' . BASE_URL . '/login/index');
-    exit;
-}
-
-// Obtener los datos del usuario de la sesión
-$user_id = $_SESSION['user_id'];
-// Aquí deberías tener una lógica para obtener los datos del usuario de la base de datos utilizando su ID
-
-// Ahora puedes mostrar los datos del usuario en la tabla
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Clinica</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./../empleados/index.php">Empleados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
     <div class="container">
         <h2 class="mt-5">Dashboard</h2>
-        <div class="table-responsive mt-4">
-        <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Persona ID</th>
-                        <th>Rol ID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php echo $user_id; ?></td>
-                        <td><?php echo $user['user_name']; ?></td>
-                        <td><?php echo $user['id_persona']; ?></td>
-                        <td><?php echo $user['id_rol_usuario']; ?></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="./../medicos/index.php">Informe de Medicos</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="./../empleados/index.php">Informe de Empleados</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                <a href="./../empleados/empleado_cargo.php">Informe de Cargo de los Empleados</a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                <a href="./../medicos/medico_especialidad.php">Informe de Especialidades de los Medicos</a>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                <a href="#">Informe de Consultas de los Pacientes</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="#">Informe de Disponibilidad de Medicos</a>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                <a href="#">Informe de Periodos de Vacaciones</a>
+            </div>
+        </div>
         </div>
         <a href="<?php echo BASE_URL; ?>/login/logout" class="btn btn-danger">Logout</a>
     </div>
