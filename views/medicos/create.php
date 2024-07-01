@@ -46,7 +46,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="./index.php">Medicos</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="./medico_especialidad.php">Medicos por Especialidad</a>
+                        </li>
                     </ul>
                 </div>
             </div>
