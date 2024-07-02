@@ -47,7 +47,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./../medicos/index.php">Medicos</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="./../medicos/medico_especialidad.php">Medicos por Especialidad</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -64,12 +66,12 @@
                         
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <?php 
                         if($rows) :
                         foreach($rows as $row): ?>
                         <tr>
-                            <td class="btn-filtro"><?= $row['tipo_empleado']?></td>
+                            <td class="btn-filtro "><button class="btn btn-dark"><?= $row['tipo_empleado']?></button></td>
                             <td><?= $row['cantidad_registros']?></td>
                             
                             

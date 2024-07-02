@@ -40,15 +40,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./index.php">Empleados</a>
+                            <a class="nav-link" aria-current="page" href="./../empleados/index.php">Empleados</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Empleados por Cargo</a>
+                            <a class="nav-link" href="./../empleados/empleado_cargo.php">Empleados por Cargo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
+                            <a class="nav-link" href="./medicos/index.php">Medicos</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Medicos por Especialidad</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -65,12 +67,12 @@
                         
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <?php 
                         if($rows) :
                         foreach($rows as $row): ?>
                         <tr>
-                            <td class="btn-filtro"><?= $row['tipo_especialidad']?></td>
+                            <td class="btn-filtro"><button class="btn btn-dark"><?= $row['tipo_especialidad']?></button></td>
                             <td><?= $row['cantidad_registros']?></td>
                             
                             
