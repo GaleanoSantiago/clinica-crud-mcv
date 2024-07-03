@@ -120,7 +120,7 @@ form,.alert{
 /* .height-100{
     min-height:100vh;
 } */
-#formLogin{
+#formLogin, #filtro{
     width:100%;
 }
 .login{
