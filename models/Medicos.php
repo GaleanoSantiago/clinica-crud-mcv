@@ -13,6 +13,12 @@ function contMedicosPorEspecialidadModel(){
     $stament = $PDO->prepare("SELECT te.id_especialidad, te.tipo_especialidad, COUNT(e.id_medico) AS cantidad_registros FROM medicos e INNER JOIN especialidades te ON e.id_especialidad = te.id_especialidad GROUP BY te.id_especialidad, te.tipo_especialidad ORDER BY te.id_especialidad");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
+// Funcion para mostrar empleados por cargo 
+function contMedicosPorEspecialidadModel2(){
+    $PDO = getConnection();
+    $stament = $PDO->prepare("SELECT te.id_especialidad, te.tipo_especialidad, COALESCE(COUNT(e.id_medico), 0) AS cantidad_registros FROM especialidades te LEFT JOIN medicos e ON e.id_especialidad = te.id_especialidad GROUP BY te.id_especialidad, te.tipo_especialidad ORDER BY te.id_especialidad");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
 // Funcion para la lista de empleados agrupados por cargo
 function MedicosPorEspecialidadModel() {
     $PDO = getConnection();
@@ -32,7 +38,7 @@ function indexEspecialidadModel() {
 // Index de Situacion Revista
 function indexSituacionRevistaModel() {
     $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM situaciones_revista");
+    $stament = $PDO->prepare("SELECT sr.id_situacion_revista, sr.situacion_revista, COALESCE(COUNT(m.id_medico), 0) AS cantidad_registros FROM situaciones_revista sr LEFT JOIN medicos m ON m.id_situacion_revista = sr.id_situacion_revista GROUP BY sr.id_situacion_revista, sr.situacion_revista ORDER BY sr.id_situacion_revista");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 

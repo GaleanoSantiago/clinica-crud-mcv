@@ -71,7 +71,7 @@
                         if($rows) :
                         foreach($rows as $row): ?>
                         <tr>
-                            <td class="btn-filtro "><button class="btn btn-dark"><?= $row['tipo_empleado']?></button></td>
+                            <td class="btn-filtro "><?= $row['tipo_empleado']?></td>
                             <td><?= $row['cantidad_registros']?></td>
                             
                             
@@ -123,7 +123,7 @@
                         
                         <?php else : ?>
                             <tr>
-                                <td colspan="3" class="text-center">No hay Registros</td>
+                                <td colspan="10" class="text-center">No hay Registros</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

@@ -79,65 +79,103 @@ if(formLogin){
     btnMostrarPassword();
     
 }
-document.addEventListener('DOMContentLoaded', (event) => {
+// document.addEventListener('DOMContentLoaded', (event) => {
 
-    const table = document.getElementById('myTable') || null;
+//     const table = document.getElementById('myTable') || null;
 
-    if(table){
-        const tableBody = document.getElementById('table-body');
-        const rows = tableBody.querySelectorAll('tr');
-        let total = 0;
+//     if(table){
+//         const tableBody = document.getElementById('table-body');
+//         const rows = tableBody.querySelectorAll('tr');
+//         let total = 0;
     
-        rows.forEach(row => {
-            const cantidadRegistros = parseInt(row.children[1].textContent, 10);
-            total += cantidadRegistros;
-        });
+//         rows.forEach(row => {
+//             const cantidadRegistros = parseInt(row.children[1].textContent, 10);
+//             total += cantidadRegistros;
+//         });
     
-        const totalRow = document.createElement('tr');
-        const totalCell1 = document.createElement('td');
-        const btnCell = document.createElement("button");
-        btnCell.classList.add("btn","btn-dark");
-        totalCell1.classList.add("btn-filtro");
-        const totalCell2 = document.createElement('td');
+//         const totalRow = document.createElement('tr');
+//         const totalCell1 = document.createElement('td');
+//         const btnCell = document.createElement("button");
+//         btnCell.classList.add("btn","btn-dark");
+//         totalCell1.classList.add("btn-filtro");
+//         const totalCell2 = document.createElement('td');
     
-        btnCell.innerText = 'Todos';
-        totalCell1.appendChild(btnCell);
-        totalCell2.textContent = total;
+//         btnCell.innerText = 'Todos';
+//         totalCell1.appendChild(btnCell);
+//         totalCell2.textContent = total;
     
-        totalRow.appendChild(totalCell1);
-        totalRow.appendChild(totalCell2);
+//         totalRow.appendChild(totalCell1);
+//         totalRow.appendChild(totalCell2);
     
-        tableBody.insertBefore(totalRow, tableBody.firstChild);
+//         tableBody.insertBefore(totalRow, tableBody.firstChild);
 
-        const btnFiltro = document.querySelectorAll(".btn-filtro") || null;
+//         const btnFiltro = document.querySelectorAll(".btn-filtro") || null;
 
-        btnFiltro.forEach(btn => {
+//         btnFiltro.forEach(btn => {
 
-            btn.style.cursor = "pointer";
-            btn.addEventListener("click", () => {
-                console.log(btn.innerText);
+//             btn.style.cursor = "pointer";
+//             btn.addEventListener("click", () => {
+//                 console.log(btn.innerText);
         
-                // Iterar sobre todas las filas de la tabla, excepto la fila de encabezado
-                for (let i = 1; i < table.rows.length; i++) {
-                    const row = table.rows[i];
-                    const especialidad = row.cells[0].textContent.trim(); // Obtener el contenido de la celda "Especialidad"
-                    row.style.display = '';
-                    // Ocultar la fila si la especialidad es "Nefrologia"
-                    if( btn.innerText === "Todos"){
-                        row.style.display = '';
+//                 // Iterar sobre todas las filas de la tabla, excepto la fila de encabezado
+//                 for (let i = 1; i < table.rows.length; i++) {
+//                     const row = table.rows[i];
+//                     const especialidad = row.cells[0].textContent.trim(); // Obtener el contenido de la celda "Especialidad"
+//                     row.style.display = '';
+//                     // Ocultar la fila si la especialidad es "Nefrologia"
+//                     if( btn.innerText === "Todos"){
+//                         row.style.display = '';
 
-                    }else if (especialidad != btn.innerText) {
-                        row.style.display = 'none';
-                    }
+//                     }else if (especialidad != btn.innerText) {
+//                         row.style.display = 'none';
+//                     }
                     
+//                 }
+//             })
+//         })
+//     }
+
+// });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const table = document.getElementById('myTable') || null;
+    const filterButton = document.getElementById('filterBtn') || null; // Botón "Filtrar" del modal
+    const clearButton = document.getElementById('clearFiltro') || null; // Botón "Limpiar" del modal
+    const selectEspecialidad = document.getElementById('filterEspecialidad') || null;
+    const selectSituacionRevista = document.getElementById('filterSituRevista') || null;
+
+    if (table && filterButton) {
+        filterButton.addEventListener('click', () => {
+            const especialidadFiltro = selectEspecialidad.value !== '0' ? selectEspecialidad.options[selectEspecialidad.selectedIndex].text.split(' (')[0] : '';
+            const situacionRevistaFiltro = selectSituacionRevista.value !== '0' ? selectSituacionRevista.options[selectSituacionRevista.selectedIndex].text.split(' (')[0] : '';
+
+            const tableBody = table.querySelector('tbody');
+            const rows = tableBody.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                const especialidad = row.children[0].textContent.trim();
+                const situacionRevista = row.children[4].textContent.trim();
+
+                if ((especialidadFiltro === '' || especialidad === especialidadFiltro) &&
+                    (situacionRevistaFiltro === '' || situacionRevista === situacionRevistaFiltro)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
                 }
-            })
-        })
+            });
+        });
 
+        clearButton.addEventListener('click', () => {
+            const tableBody = table.querySelector('tbody');
+            const rows = tableBody.querySelectorAll('tr');
 
-        
+            rows.forEach(row => {
+                row.style.display = '';
+            });
 
+            // Resetear los selectores a la opción por defecto
+            selectEspecialidad.value = '0';
+            selectSituacionRevista.value = '0';
+        });
     }
-
 });
-
