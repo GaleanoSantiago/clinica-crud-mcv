@@ -120,7 +120,7 @@ form,.alert{
 /* .height-100{
     min-height:100vh;
 } */
-#formLogin{
+#formLogin, #filtro{
     width:100%;
 }
 .login{
@@ -161,7 +161,6 @@ form,.alert{
     padding:15px;
 }
 
-/* thead{
-    background:var(--bs-dark) !important; */
-    /* color:var(--bs-light) !important;
-} */
+.btn-filtro{
+    padding: 2px !important;
+}

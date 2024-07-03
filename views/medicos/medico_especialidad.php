@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados por Cargo</title>
+    <title>Medicos por Especialidad</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Exportar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
     <style>
@@ -26,7 +30,10 @@
         require_once("./../../controllers/MedicoController.php");
         $rows = contMedicosPorEspecialidad();
         $medicos = MedicosPorEspecialidad();
-        // var_dump($empleados);
+        $especialidades = contMedicosPorEspecialidad2();
+        $situacion_revista = indexSituacionRevista();
+
+        // var_dump($situacion_revista);
         // die();
     ?>
     <header>
@@ -40,15 +47,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./index.php">Empleados</a>
+                            <a class="nav-link" aria-current="page" href="./../empleados/index.php">Empleados</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Empleados por Cargo</a>
+                            <a class="nav-link" href="./../empleados/empleado_cargo.php">Empleados por Cargo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
+                            <a class="nav-link" href="./index.php">Medicos</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Medicos por Especialidad</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +74,7 @@
                         
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <?php 
                         if($rows) :
                         foreach($rows as $row): ?>
@@ -84,7 +93,17 @@
                         <?php endif; ?>
                 </tbody>
             </table>
-
+            <div class="mb-3 d-flex justify-content-around">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Filtrar Datos
+                </button>
+                
+                <div class="d-flex gap-4">
+                    <button id="exportPDF" class="btn btn-outline-warning">Exportar a PDF</button>
+                    <button id="exportExcel" class="btn btn-outline-success">Exportar a Excel</button>
+                </div>
+            </div>
             <h2 class="text-center">Medicos de la Especialidad <span id="spanEspecialidad"></span></h2>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered" id="myTable">
@@ -127,18 +146,62 @@
                         
                         <?php else : ?>
                             <tr>
-                                <td colspan="3" class="text-center">No hay Registros</td>
+                                <td colspan="12" class="text-center">No hay Registros</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
+                
             </div>
+            
         </div>
     </section>
 
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Filtros</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 d-flex align-items-end gap-4">
+                    <label for="especialidad" class="form-label">Especialidad:</label>
+                    <select name="especialidad" id="filterEspecialidad" class="form-select">
+                        <!-- Esta option es para no utilizar este parametro para el filtro -->
+                        <option value="0">NO APLICAR FILTRO</option>
+                    <?php foreach($especialidades as $esp) :?>
+                        <option value="<?= $esp["id_especialidad"]?>"><?= $esp["tipo_especialidad"]?> (<?= $esp['cantidad_registros']?>)</option>
+                    <?php endforeach;?>
+                    </select>
+                </div>
+                <div class="mb-3 d-flex align-items-end gap-4">
+                    <label for="especialidad" class="form-label">Situacion Revista:</label>
+                    <select name="situacion_revista" id="filterSituRevista" class="form-select">
+                        <!-- Esta option es para no utilizar este parametro para el filtro -->
+                        <option value="0">NO APLICAR FILTRO</option>
+                    <?php foreach($situacion_revista as $situ) :?>
+                        <option value="<?= $situ["id_situacion_revista"]?>"><?= $situ["situacion_revista"]?> (<?= $situ['cantidad_registros']?>)</option>
+                    <?php endforeach;?>
+                    </select>
+                </div>
+                </div>
+            <div class="modal-footer d-flex justify-content-around">
+                
+                <!-- Boton para quitar todos los filtros (mostrar todas las filas) -->
+                <button class="btn btn-outline-danger" id="clearFiltro" data-bs-dismiss="modal">Limpiar Filtro</button>
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" id="filterBtn">Aplicar Filtro</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+</script>
     <!-- JS Propios -->
     <script src="./../../assets/js/forms.js"></script>
 </body>

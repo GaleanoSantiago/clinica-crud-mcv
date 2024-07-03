@@ -10,6 +10,10 @@
     rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
+    <!-- Exportar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <style>
         th,td{
             text-align:center;
@@ -24,9 +28,13 @@
     <?php
         require_once("./../../controllers/EmpleadoController.php");
         $rows = contEmpleadosPorCargo();
-        $empleados = EmpleadosPorCargo();
+        if(isset($_REQUEST['licencia'])){
+            $empleados = EmpleadosPorCargo($_POST['licencia']);
+        }else{
+            $empleados = EmpleadosPorCargo();
+        }
         // var_dump($empleados);
-        // die();
+        // die();*/
     ?>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,7 +55,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./../medicos/index.php">Medicos</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="./../medicos/medico_especialidad.php">Medicos por Especialidad</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -64,12 +74,12 @@
                         
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <?php 
                         if($rows) :
                         foreach($rows as $row): ?>
                         <tr>
-                            <td class="btn-filtro"><?= $row['tipo_empleado']?></td>
+                            <td class="btn-filtro "><?= $row['tipo_empleado']?></td>
                             <td><?= $row['cantidad_registros']?></td>
                             
                             
@@ -83,6 +93,21 @@
                         <?php endif; ?>
                 </tbody>
             </table>
+
+    
+            <div class="mb-3 d-flex justify-content-around">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Filtrar Datos
+                </button>
+                
+                <div class="d-flex gap-4">
+                    <button id="exportPDF" class="btn btn-outline-warning">Exportar a PDF</button>
+                    <button id="exportExcel" class="btn btn-outline-success">Exportar a Excel</button>
+                </div>
+            </div>
+
+
             <h2 class="text-center">Empleados del Cargo</h2>
             <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered" id="myTable">
@@ -98,6 +123,8 @@
                             <th>Dirección</th>
                             <th>Codigo Postal</th>
                             <th>Contacto</th>
+                            <th>Fecha Alta Vacaciones</th>
+                            <th>Fecha Baja Vacaciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,13 +142,15 @@
                             <td><?= $empl['direccion']?></td>
                             <td><?= $empl['codigo_postal']?></td>
                             <td><?= $empl['contacto']?></td>
+                            <td><?= $empl['fecha_inicio']?></td>
+                            <td><?= $empl['fecha_fin']?></td>
                             
                         </tr>
                         <?php endforeach; ?>
                         
                         <?php else : ?>
                             <tr>
-                                <td colspan="3" class="text-center">No hay Registros</td>
+                                <td colspan="10" class="text-center">No hay Registros</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -129,11 +158,40 @@
                 </div>
         </div>
     </section>
+            <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filtro de licencia</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="empleado_cargo.php" method="POST" autocomplete="off" id="filtro">
+                <div class="modal-body">
+                    <div class="mb-3 d-flex align-items-end gap-4">
+                        <label for="licencia" class="form-label">Fecha:</label>
+                        <input type="date" name="licencia" id="licencia" class="form-select">
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-around border">
+                    <button class="btn btn-outline-danger" onclick="reloadPage()">Limpiar Filtro</button>
+                    <input type="submit" value="Aplicar Filtro" class="btn btn-outline-success">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <!-- JS Propios -->
     <script src="./../../assets/js/forms.js"></script>
+    <script>
+        function reloadPage() {
+            location.reload();
+        }
+    </script>
 </body>
 </html>

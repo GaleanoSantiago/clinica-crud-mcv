@@ -23,6 +23,15 @@ function contMedicosPorEspecialidad() {
         return false;
     }
 }
+function contMedicosPorEspecialidad2() {
+    $result = contMedicosPorEspecialidadModel2();
+    if ($result) {
+        return $result;
+    } else {
+        return false;
+    }
+}
+
 function MedicosPorEspecialidad() {
     $result = MedicosPorEspecialidadModel();
     if ($result) {

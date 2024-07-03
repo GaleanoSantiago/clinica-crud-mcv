@@ -37,7 +37,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./../medicos/index.php">Medicos</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="./../medicos/medico_especialidad.php">Medicos por Especialidad</a>
+                        </li>
                     </ul>
                 </div>
             </div>
