@@ -8,6 +8,10 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Exportar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
     <style>
@@ -89,10 +93,17 @@
                         <?php endif; ?>
                 </tbody>
             </table>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Filtrar Datos
-            </button>
+            <div class="mb-3 d-flex justify-content-around">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Filtrar Datos
+                </button>
+                
+                <div class="d-flex gap-4">
+                    <button id="exportPDF" class="btn btn-outline-warning">Exportar a PDF</button>
+                    <button id="exportExcel" class="btn btn-outline-success">Exportar a Excel</button>
+                </div>
+            </div>
             <h2 class="text-center">Medicos de la Especialidad <span id="spanEspecialidad"></span></h2>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered" id="myTable">
@@ -140,7 +151,9 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                
             </div>
+            
         </div>
     </section>
 

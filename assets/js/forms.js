@@ -178,4 +178,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
             selectSituacionRevista.value = '0';
         });
     }
+    const exportPDFButton = document.getElementById('exportPDF');
+    if (exportPDFButton) {
+        exportPDFButton.addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'landscape', // Cambiar la orientación a paisaje
+            });
+            doc.autoTable({
+                html: '#myTable',
+                startY: 20,
+                theme: 'striped',
+                headStyles: { fontSize: 10 }, // Tamaño de fuente para encabezados
+                bodyStyles: { fontSize: 8 },  // Tamaño de fuente para el cuerpo
+                margin: { top: 10, right: 10, bottom: 10, left: 10 },
+            });
+            doc.save('clinica_informe.pdf');
+        });
+    }
+
+    const exportExcelButton = document.getElementById('exportExcel');
+    if (exportExcelButton) {
+        exportExcelButton.addEventListener('click', () => {
+            const wb = XLSX.utils.table_to_book(document.getElementById('myTable'), { sheet: "Sheet1" });
+            XLSX.writeFile(wb, 'clinica_informe.xlsx');
+        });
+    }
 });
