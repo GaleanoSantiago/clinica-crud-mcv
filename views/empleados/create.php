@@ -103,8 +103,10 @@
                         <div class="mb-3">
                             <label for="tipo_empleado" class="form-label">Tipo de Empleado</label>
                             <select name="tipo_empleado" id="" class="form-select">
-                                <?php foreach($tipo_empleados as $tipo) :?>
+                                <?php foreach($tipo_empleados as $tipo) :
+                                    if($tipo["tipo_empleado"]!='Medico') :?>
                                     <option value="<?= $tipo["id_tipo_empleado"]?>"><?= $tipo["tipo_empleado"]?></option>
+                                    <?php endif; ?>
                                 <?php endforeach;?>
                             </select>
                         </div>
