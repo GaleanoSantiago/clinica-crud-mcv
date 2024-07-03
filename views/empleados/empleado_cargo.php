@@ -24,9 +24,13 @@
     <?php
         require_once("./../../controllers/EmpleadoController.php");
         $rows = contEmpleadosPorCargo();
-        $empleados = EmpleadosPorCargo();
+        if(isset($_REQUEST['licencia'])){
+            $empleados = EmpleadosPorCargo($_POST['licencia']);
+        }else{
+            $empleados = EmpleadosPorCargo();
+        }
         // var_dump($empleados);
-        // die();
+        // die();*/
     ?>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -85,6 +89,37 @@
                         <?php endif; ?>
                 </tbody>
             </table>
+
+    
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Filtros
+            </button>
+
+            <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Filtro de licencia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="empleado_cargo.php" method="POST" autocomplete="off" id="filtro">
+            <div class="modal-body">
+                <div class="mb-3 d-flex align-items-end gap-4">
+                    <label for="licencia" class="form-label">Fecha:</label>
+                    <input type="date" name="licencia" id="licencia" class="form-select">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <input type="submit" value="Filtrar" class="btn btn-primary">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
             <h2 class="text-center">Empleados del Cargo</h2>
             <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered" id="myTable">
@@ -100,6 +135,8 @@
                             <th>Dirección</th>
                             <th>Codigo Postal</th>
                             <th>Contacto</th>
+                            <th>Fecha Alta Vacaciones</th>
+                            <th>Fecha Baja Vacaciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,6 +154,8 @@
                             <td><?= $empl['direccion']?></td>
                             <td><?= $empl['codigo_postal']?></td>
                             <td><?= $empl['contacto']?></td>
+                            <td><?= $empl['fecha_inicio']?></td>
+                            <td><?= $empl['fecha_fin']?></td>
                             
                         </tr>
                         <?php endforeach; ?>

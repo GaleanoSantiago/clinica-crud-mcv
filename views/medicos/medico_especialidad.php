@@ -46,7 +46,7 @@
                             <a class="nav-link" href="./../empleados/empleado_cargo.php">Empleados por Cargo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./medicos/index.php">Medicos</a>
+                            <a class="nav-link" href="./index.php">Medicos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Medicos por Especialidad</a>

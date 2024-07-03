@@ -9,10 +9,18 @@ function indexModel() {
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 // Funcion para la lista de empleados agrupados por cargo
-function EmpleadosPorCargoModel() {
+function EmpleadosPorCargoModel($date) {
     $PDO = getConnection();
     // $stament = $PDO->prepare("SELECT * FROM empleados");
-    $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto ORDER BY tipos_empleado.tipo_empleado, empleados.id_empleado");
+    if($date){
+        echo  $date;
+        $date = date_format(date_create($date), 'Y-m-d');
+        $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto,vacaciones.fecha_inicio, vacaciones.fecha_fin FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto INNER JOIN vacaciones on vacaciones.id_vacacion= empleados.id_vacacion WHERE vacaciones.fecha_inicio='$date' or vacaciones.fecha_fin='$date'
+    ORDER BY tipos_empleado.tipo_empleado, empleados.id_empleado;");
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+    }
+    $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto,vacaciones.fecha_inicio, vacaciones.fecha_fin FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto INNER JOIN vacaciones on vacaciones.id_vacacion= empleados.id_vacacion
+ ORDER BY tipos_empleado.tipo_empleado, empleados.id_empleado;");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 // Funcion para mostrar empleados por cargo 
