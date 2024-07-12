@@ -15,8 +15,8 @@ function index() {
     }
 }
 
-function EmpleadosPorCargo($date=false) {
-    $result = EmpleadosPorCargoModel($date);
+function EmpleadosPorCargo($date=false,$opcion=false) {
+    $result = EmpleadosPorCargoModel($date,$opcion);
     if ($result) {
         return $result;
     } else {

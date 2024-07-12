@@ -29,7 +29,7 @@
         require_once("./../../controllers/EmpleadoController.php");
         $rows = contEmpleadosPorCargo();
         if(isset($_REQUEST['licencia'])){
-            $empleados = EmpleadosPorCargo($_POST['licencia']);
+            $empleados = EmpleadosPorCargo($_POST['licencia'],$_POST['opcion']);
         }else{
             $empleados = EmpleadosPorCargo();
         }
@@ -172,9 +172,16 @@
                         <label for="licencia" class="form-label">Fecha:</label>
                         <input type="date" name="licencia" id="licencia" class="form-select">
                     </div>
+                    <div class="mb-3 d-flex align-items-end gap-4">
+                    <label for="opcion" class="form-label">Tipo de fecha</label>
+                        <select name="opcion" id='opcion' class="form-select">
+                        <option value="1">Fecha Inicio Vacaciones</option>
+                        <option value="2">Fecha Finalizacion Vacaciones</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-around border">
-                    <button class="btn btn-outline-danger" onclick="reloadPage()">Limpiar Filtro</button>
+                    <a href="./empleado_cargo.php" class="btn btn-outline-danger">Limpiar Filtro</a>
                     <input type="submit" value="Aplicar Filtro" class="btn btn-outline-success">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
