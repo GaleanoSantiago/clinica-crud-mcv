@@ -8,6 +8,13 @@ if(isset($_REQUEST['insertEmpleado'])){
         header("Location:create.php?msg=emplGuard");
 
     }
+}elseif(isset($_REQUEST['deleteEmpleado'])){
+    // borrarEmpleado();
+    $response = borrarEmpleado();
+    if($response != false){
+        header("Location:index.php?msg=elimSuccs");
+
+    }
 }
 
 function insertarEmpleado(){
@@ -47,4 +54,11 @@ function insertarEmpleado(){
     return $id_empleado;
 };
 
+
+function borrarEmpleado(){
+    $id_empleado = $_REQUEST["id_empleado"];
+    // echo $id_empleado;
+    $response = deleteEmpleado($id_empleado);
+    return $response;
+}
 ?>

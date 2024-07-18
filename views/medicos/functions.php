@@ -5,6 +5,13 @@ require_once("./../empleados/functions.php");
 if(isset($_REQUEST['insertMedico'])){
     insertarMedicoFront();
 
+}elseif(isset($_REQUEST['deleteMedico'])){
+    // borrarMedico();
+    $response = borrarEmpleado();
+    if($response != false){
+        header("Location:index.php?msg=elimSuccs");
+
+    }
 }
 
 function insertarMedicoFront(){

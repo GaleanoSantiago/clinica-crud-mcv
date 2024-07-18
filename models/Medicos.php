@@ -58,4 +58,13 @@ function insertarMedico($id_empleado, $num_colegiado, $id_especialidad, $id_situ
     return ($stament->execute()) ? $PDO->lastInsertId() : false;
 }
 
+// Para eliminar empleado
+
+function deleteMedicoModel($id) {
+    $PDO = getConnection();
+    $stament = $PDO->prepare("DELETE FROM `medicos` WHERE `medicos`.`id_medico` =  :id");
+    $stament->bindParam(":id", $id);
+    return ($stament->execute()) ? true : false;
+}
+
 ?>

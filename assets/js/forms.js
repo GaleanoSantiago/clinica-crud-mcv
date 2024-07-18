@@ -79,63 +79,7 @@ if(formLogin){
     btnMostrarPassword();
     
 }
-// document.addEventListener('DOMContentLoaded', (event) => {
 
-//     const table = document.getElementById('myTable') || null;
-
-//     if(table){
-//         const tableBody = document.getElementById('table-body');
-//         const rows = tableBody.querySelectorAll('tr');
-//         let total = 0;
-    
-//         rows.forEach(row => {
-//             const cantidadRegistros = parseInt(row.children[1].textContent, 10);
-//             total += cantidadRegistros;
-//         });
-    
-//         const totalRow = document.createElement('tr');
-//         const totalCell1 = document.createElement('td');
-//         const btnCell = document.createElement("button");
-//         btnCell.classList.add("btn","btn-dark");
-//         totalCell1.classList.add("btn-filtro");
-//         const totalCell2 = document.createElement('td');
-    
-//         btnCell.innerText = 'Todos';
-//         totalCell1.appendChild(btnCell);
-//         totalCell2.textContent = total;
-    
-//         totalRow.appendChild(totalCell1);
-//         totalRow.appendChild(totalCell2);
-    
-//         tableBody.insertBefore(totalRow, tableBody.firstChild);
-
-//         const btnFiltro = document.querySelectorAll(".btn-filtro") || null;
-
-//         btnFiltro.forEach(btn => {
-
-//             btn.style.cursor = "pointer";
-//             btn.addEventListener("click", () => {
-//                 console.log(btn.innerText);
-        
-//                 // Iterar sobre todas las filas de la tabla, excepto la fila de encabezado
-//                 for (let i = 1; i < table.rows.length; i++) {
-//                     const row = table.rows[i];
-//                     const especialidad = row.cells[0].textContent.trim(); // Obtener el contenido de la celda "Especialidad"
-//                     row.style.display = '';
-//                     // Ocultar la fila si la especialidad es "Nefrologia"
-//                     if( btn.innerText === "Todos"){
-//                         row.style.display = '';
-
-//                     }else if (especialidad != btn.innerText) {
-//                         row.style.display = 'none';
-//                     }
-                    
-//                 }
-//             })
-//         })
-//     }
-
-// });
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const table = document.getElementById('myTable') || null;
@@ -144,25 +88,53 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const selectEspecialidad = document.getElementById('filterEspecialidad') || null;
     const selectSituacionRevista = document.getElementById('filterSituRevista') || null;
 
+    // Para fechas de vacaciones en empleados
+    const fechaInicioVacacion = document.getElementById('fecha_inicio') || null;
+    const fechaFinVacacion = document.getElementById('fecha_final') || null;
+
     if (table && filterButton) {
         filterButton.addEventListener('click', () => {
-            const especialidadFiltro = selectEspecialidad.value !== '0' ? selectEspecialidad.options[selectEspecialidad.selectedIndex].text.split(' (')[0] : '';
-            const situacionRevistaFiltro = selectSituacionRevista.value !== '0' ? selectSituacionRevista.options[selectSituacionRevista.selectedIndex].text.split(' (')[0] : '';
-
             const tableBody = table.querySelector('tbody');
             const rows = tableBody.querySelectorAll('tr');
+            
+            if(selectEspecialidad && selectSituacionRevista){
+                // console.log("Tabla Medico");
+                const especialidadFiltro = selectEspecialidad.value !== '0' ? selectEspecialidad.options[selectEspecialidad.selectedIndex].text.split(' (')[0] : '';
+                const situacionRevistaFiltro = selectSituacionRevista.value !== '0' ? selectSituacionRevista.options[selectSituacionRevista.selectedIndex].text.split(' (')[0] : '';
+                
+                
 
-            rows.forEach(row => {
-                const especialidad = row.children[0].textContent.trim();
-                const situacionRevista = row.children[4].textContent.trim();
+                rows.forEach(row => {
+                    const especialidad = row.children[3].textContent.trim();
+                    const situacionRevista = row.children[4].textContent.trim();
 
-                if ((especialidadFiltro === '' || especialidad === especialidadFiltro) &&
-                    (situacionRevistaFiltro === '' || situacionRevista === situacionRevistaFiltro)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
+                    if ((especialidadFiltro === '' || especialidad === especialidadFiltro) &&
+                        (situacionRevistaFiltro === '' || situacionRevista === situacionRevistaFiltro)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }else if(fechaInicioVacacion && fechaFinVacacion){
+                const fechaInicioFiltro = new Date(fechaInicioVacacion.value); 
+                const fechaFinFiltro = new Date(fechaFinVacacion.value); 
+                // console.log("Tabla Empleado");
+
+                rows.forEach(row => {
+                    const fechaInicioVac = new Date(row.children[10].textContent.trim());
+                    const fechaFinVac = new Date(row.children[11].textContent.trim());
+
+                    if ((fechaInicioFiltro <= fechaInicioVac && fechaInicioVac <= fechaFinFiltro) ||
+                        (fechaInicioFiltro <= fechaFinVac && fechaFinVac <= fechaFinFiltro) ||
+                        (fechaInicioVac <= fechaInicioFiltro && fechaFinFiltro <= fechaFinVac)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+            }
+            
         });
 
         clearButton.addEventListener('click', () => {
@@ -174,10 +146,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
 
             // Resetear los selectores a la opción por defecto
-            selectEspecialidad.value = '0';
-            selectSituacionRevista.value = '0';
+            selectEspecialidad != null ? selectEspecialidad.value = '0' : "";
+            selectSituacionRevista != null ? selectSituacionRevista.value = '0' : "";
+
+            fechaInicioVacacion != null ? fechaInicioVacacion.value="" : "";
+            fechaFinVacacion != null ? fechaFinVacacion.value="" : "";
+            
         });
     }
+
+
+
     const exportPDFButton = document.getElementById('exportPDF');
     if (exportPDFButton) {
         exportPDFButton.addEventListener('click', () => {
@@ -205,3 +184,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 });
+
+const btnEliminar = document.querySelectorAll(".btn-delete");
+btnEliminar.forEach(btn=>{
+    btn.addEventListener("click", (event) => {
+        confirmarEliminacion(event);
+    });
+})
+const confirmarEliminacion = (event) => {
+    // Mostrar un mensaje de confirmación
+    let respuesta = confirm("¿Estás seguro de que deseas eliminar este registro?");
+    // Si el usuario confirma la eliminación, el formulario se enviará
+    if (!respuesta) {
+        event.preventDefault(); // Evitar el envío del formulario si el usuario cancela
+    }
+};

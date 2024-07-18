@@ -14,15 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
-    <style>
-        th,td{
-            text-align:center;
-        }
-        table{
-            margin-bottom:40px !important;
-            font-size:.82rem;
-        }
-    </style>
+    
 </head>
 <body>
     <?php

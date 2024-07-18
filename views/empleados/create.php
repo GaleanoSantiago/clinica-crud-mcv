@@ -37,15 +37,15 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="./index.php">Empleados</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link " href="./empleado_cargo.php">Empleados por Cargo</a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="./../medicos/index.php">Medicos</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="./../medicos/medico_especialidad.php">Medicos por Especialidad</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

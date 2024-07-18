@@ -138,6 +138,19 @@ function limpiarcadena($campo) {
     return $campo;
 }
 
+// Para eliminar empleado
+
+function deleteEmpleado($id) {
+    $result = deleteEmpleadoModel($id);
+    if ($result != false) {
+        return true;
+    } else {
+        // header("Location:show.php?id=".$id);
+        return false;
+
+    }
+}
+
 // ================================= Funciones que no se utlizan todavia =======================================
 
 function show($id) {
@@ -168,14 +181,6 @@ function update($id, $nombre, $cod_prod, $descripcion, $precio, $precio_descuent
     }
 }
 
-function delete($id) {
-    $result = deleteModel($id);
-    if ($result != false) {
-        header("Location:index.php?msg=elimSuccs");
-    } else {
-        header("Location:show.php?id=".$id);
-    }
-}
 
 function borrarDescuentoAll() {
     $result = borrarDescuentoAllModel();

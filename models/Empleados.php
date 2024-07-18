@@ -5,7 +5,27 @@ require_once "./../../config/bd.php";
 function indexModel() {
     $PDO = getConnection();
     // $stament = $PDO->prepare("SELECT * FROM empleados");
-    $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto ORDER BY empleados.id_empleado");
+    // $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto ORDER BY empleados.id_empleado");
+    $stament = $PDO->prepare("SELECT empleados.id_empleado, 
+                                personas.id_persona, 
+                                personas.nombre_persona, 
+                                tipos_empleado.tipo_empleado, 
+                                personas.cuit_persona, 
+                                personas.dni_persona, 
+                                municipios.nombre_municipio, 
+                                direcciones.direccion, 
+                                direcciones.codigo_postal, 
+                                contactos.contacto, 
+                                vacaciones.fecha_inicio, 
+                                vacaciones.fecha_fin 
+                            FROM empleados 
+                            INNER JOIN personas ON empleados.id_persona = personas.id_persona 
+                            INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado 
+                            INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio 
+                            INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion 
+                            INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto 
+                            INNER JOIN vacaciones ON vacaciones.id_vacacion = empleados.id_vacacion 
+                            ORDER BY empleados.id_empleado");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 // Funcion para la lista de empleados agrupados por cargo
@@ -19,7 +39,7 @@ function EmpleadosPorCargoModel($date) {
     return ($stament->execute()) ? $stament->fetchAll() : false;
     }
     $stament = $PDO->prepare("SELECT empleados.id_empleado, personas.id_persona, personas.nombre_persona, tipos_empleado.tipo_empleado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto,vacaciones.fecha_inicio, vacaciones.fecha_fin FROM empleados INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto INNER JOIN vacaciones on vacaciones.id_vacacion= empleados.id_vacacion
- ORDER BY tipos_empleado.tipo_empleado, empleados.id_empleado;");
+    ORDER BY tipos_empleado.tipo_empleado, empleados.id_empleado;");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 // Funcion para mostrar empleados por cargo 
@@ -149,6 +169,18 @@ function indexProvinciasModel(){
     $stament = $PDO->prepare("SELECT * FROM provincias");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
+
+// Para eliminar empleado
+
+
+function deleteEmpleadoModel($id) {
+    $PDO = getConnection();
+    $stament = $PDO->prepare("DELETE FROM `empleados` WHERE `empleados`.`id_empleado` = :id");
+    $stament->bindParam(":id", $id);
+    return ($stament->execute()) ? true : false;
+}
+
+
 // ================================= Funciones que no se utlizan todavia =======================================
 function lastIdModel() {
     $PDO = getConnection();
@@ -190,13 +222,6 @@ function updateModel($id, $nombre, $cod_prod, $descripcion, $precio, $precio_des
     $stament->bindParam(":fecha", $fecha);
     $stament->bindParam(":img", $img);
     return ($stament->execute()) ? $id : false;
-}
-
-function deleteModel($id) {
-    $PDO = getConnection();
-    $stament = $PDO->prepare("DELETE FROM productos WHERE producto_id = :id");
-    $stament->bindParam(":id", $id);
-    return ($stament->execute()) ? true : false;
 }
 
 function borrarDescuentoAllModel() {
