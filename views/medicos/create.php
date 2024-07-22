@@ -10,6 +10,7 @@
     rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/styleCard.css">
 </head>
 <body>
     <?php
@@ -27,32 +28,11 @@
         // var_dump($paises);
         // die();
     ?>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./../dashboard/index.php">Clinica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../empleados/index.php">Empleados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="./../empleados/empleado_cargo.php">Empleados por Cargo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="./index.php">Medicos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./medico_especialidad.php">Medicos por Especialidad</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+   <header>
+    <?php 
+       include './../head/head.php';
+       echo $head;
+       ?>
     </header>
     <section>
         <div class="container d-flex flex-column align-items-center">
@@ -70,9 +50,13 @@
                 <input type="hidden" name="insertMedico">
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" name="apellido" id="apellido" class="form-control" required>
+                        </div>
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre y Apellido</label>
-                            <input type="text" name="nombre" id="" class="form-control" required>
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="situacion_revista" class="form-label">Situación Revista</label>
@@ -142,9 +126,9 @@
                     </div>
                     <div class="col-12">
                         <div class="mb-3 d-flex justify-content-around">
+                             <!-- <input type="reset" value="Reset" class="btn btn-danger"> -->
+                             <a href="./index.php" class="btn btn-danger">Cancelar</a>
                             <input type="submit" value="Guardar" class="btn btn-success">
-                            <!-- <input type="reset" value="Reset" class="btn btn-danger"> -->
-                            <a href="./index.php" class="btn btn-danger">Cancelar</a>
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/styleCard.css">
     <style>
         th,td{
             text-align:center;
@@ -37,31 +38,10 @@
         // die();
     ?>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./../dashboard/index.php">Clinica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./../empleados/index.php">Empleados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../empleados/empleado_cargo.php">Empleados por Cargo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./index.php">Medicos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Medicos por Especialidad</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <?php 
+       include './../head/head.php';
+       echo $head;
+       ?>
     </header>
     <section>
         <div class="container">
@@ -112,7 +92,7 @@
                             <th>Especialidad</th>
                             <th>ID Medico</th>
                             <th>ID Empleado</th>
-                            <th>Nombre y Apellido</th>
+                            <th>Apellido y Nombre</th>
                             <th>Situación Revista</th>
                             <th>Número de Colegiado</th>
                             <th>CUIT</th>
@@ -131,7 +111,7 @@
                             <td><?= $med['especialidad']?></td>
                             <td><?= $med['id_medico']?></td>
                             <td><?= $med['id_empleado']?></td>
-                            <td><?= $med['nombre_persona']?></td>
+                            <td><?= $med['apellido_persona']." ".$med['nombre_persona']?></td>
                             <td><?= $med['situacion_revista']?></td>
                             <td><?= $med['numero_colegiado']?></td>
                             <td><?= $med['cuit_persona']?></td>

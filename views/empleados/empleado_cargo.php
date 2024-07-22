@@ -36,32 +36,11 @@
         // var_dump($empleados);
         // die();*/
     ?>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./../dashboard/index.php">Clinica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./index.php">Empleados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Empleados por Cargo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/medico_especialidad.php">Medicos por Especialidad</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+  <header>
+    <?php 
+       include './../head/head.php';
+       echo $head;
+       ?>
     </header>
     <section>
         <div class="container">
@@ -116,7 +95,7 @@
                             <th>Cargo</th>
                             <th>ID Empleado</th>
                             <th>ID Persona</th>
-                            <th>Nombre y Apellido</th>
+                            <th>Apellido y Nombre</th>
                             <th>CUIT</th>
                             <th>DNI</th>
                             <th>Municipio</th>
@@ -135,7 +114,7 @@
                             <td><?= $empl['tipo_empleado']?></td>
                             <td><?= $empl['id_empleado']?></td>
                             <td><?= $empl['id_persona']?></td>
-                            <td><?= $empl['nombre_persona']?></td>
+                            <td><?= $empl['apellido_persona']." ".$empl['nombre_persona']?></td>
                             <td><?= $empl['cuit_persona']?></td>
                             <td><?= $empl['dni_persona']?></td>
                             <td><?= $empl['nombre_municipio']?></td>

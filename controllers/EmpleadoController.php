@@ -53,8 +53,8 @@ function guardarContacto($email) {
 }
 
 // insertar persona
-function guardarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto, $id_rol_persona) {
-    $id = insertarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto, $id_rol_persona);
+function guardarPersona($apellido,$nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto) {
+    $id = insertarPersona($apellido,$nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto);
     if ($id != false) {
         return $id;
     } else {
@@ -137,55 +137,6 @@ function limpiarcadena($campo) {
     $campo = htmlspecialchars($campo);
     return $campo;
 }
-
-// ================================= Funciones que no se utlizan todavia =======================================
-
-function show($id) {
-    $result = showModel($id);
-    if ($result != false) {
-        return $result;
-    } else {
-        header("Location:index.php");
-    }
-}
-
-
-function indexCategorias() {
-    $result = indexCategoriasModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
-
-function update($id, $nombre, $cod_prod, $descripcion, $precio, $precio_descuento, $oferta, $categoria, $fecha, $img) {
-    $result = updateModel($id, $nombre, $cod_prod, $descripcion, $precio, $precio_descuento, $oferta, $categoria, $fecha, $img);
-    if ($result != false) {
-        header("Location:show.php?id=".$id);
-    } else {
-        header("Location:index.php");
-    }
-}
-
-function delete($id) {
-    $result = deleteModel($id);
-    if ($result != false) {
-        header("Location:index.php?msg=elimSuccs");
-    } else {
-        header("Location:show.php?id=".$id);
-    }
-}
-
-function borrarDescuentoAll() {
-    $result = borrarDescuentoAllModel();
-    if ($result != false) {
-        header("Location:index.php?funciono=si");
-    } else {
-        header("Location:index.php?funciono=no");
-    }
-}
-
 
 ?>
 

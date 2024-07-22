@@ -25,31 +25,10 @@
         // die();
     ?>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./../dashboard/index.php">Clinica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="./index.php">Empleados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="./empleado_cargo.php">Empleados por Cargo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/medico_especialidad.php">Medicos por Especialidad</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <?php 
+       include './../head/head.php';
+       echo $head;
+       ?>
     </header>
     <section>
         <div class="container d-flex flex-column align-items-center">
@@ -68,8 +47,12 @@
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre y Apellido</label>
-                            <input type="text" name="nombre" id="" class="form-control" required>
+                            <label for="apellido" class="form-label">Apellido</label>
+                            <input type="text" name="apellido" id="apellido" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="cuit" class="form-label">Cuil 

@@ -8,6 +8,18 @@
     <!-- Estilos Propios -->
     <link rel="stylesheet" href="./../../assets/css/style.css">
 </head>
+<?php
+
+
+session_start();
+
+if(isset($_SESSION['user'])){
+    header("Location: ./../dashboard/");
+}
+
+?>
+
+
 <body id="login-body">
     
     <section class="section-cont-login">

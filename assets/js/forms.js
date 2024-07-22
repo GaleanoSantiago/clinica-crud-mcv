@@ -79,63 +79,6 @@ if(formLogin){
     btnMostrarPassword();
     
 }
-// document.addEventListener('DOMContentLoaded', (event) => {
-
-//     const table = document.getElementById('myTable') || null;
-
-//     if(table){
-//         const tableBody = document.getElementById('table-body');
-//         const rows = tableBody.querySelectorAll('tr');
-//         let total = 0;
-    
-//         rows.forEach(row => {
-//             const cantidadRegistros = parseInt(row.children[1].textContent, 10);
-//             total += cantidadRegistros;
-//         });
-    
-//         const totalRow = document.createElement('tr');
-//         const totalCell1 = document.createElement('td');
-//         const btnCell = document.createElement("button");
-//         btnCell.classList.add("btn","btn-dark");
-//         totalCell1.classList.add("btn-filtro");
-//         const totalCell2 = document.createElement('td');
-    
-//         btnCell.innerText = 'Todos';
-//         totalCell1.appendChild(btnCell);
-//         totalCell2.textContent = total;
-    
-//         totalRow.appendChild(totalCell1);
-//         totalRow.appendChild(totalCell2);
-    
-//         tableBody.insertBefore(totalRow, tableBody.firstChild);
-
-//         const btnFiltro = document.querySelectorAll(".btn-filtro") || null;
-
-//         btnFiltro.forEach(btn => {
-
-//             btn.style.cursor = "pointer";
-//             btn.addEventListener("click", () => {
-//                 console.log(btn.innerText);
-        
-//                 // Iterar sobre todas las filas de la tabla, excepto la fila de encabezado
-//                 for (let i = 1; i < table.rows.length; i++) {
-//                     const row = table.rows[i];
-//                     const especialidad = row.cells[0].textContent.trim(); // Obtener el contenido de la celda "Especialidad"
-//                     row.style.display = '';
-//                     // Ocultar la fila si la especialidad es "Nefrologia"
-//                     if( btn.innerText === "Todos"){
-//                         row.style.display = '';
-
-//                     }else if (especialidad != btn.innerText) {
-//                         row.style.display = 'none';
-//                     }
-                    
-//                 }
-//             })
-//         })
-//     }
-
-// });
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const table = document.getElementById('myTable') || null;

@@ -13,6 +13,7 @@ if(isset($_REQUEST['insertEmpleado'])){
 function insertarEmpleado(){
     // echo "Insertando empleado";
     // echo "<br>";
+    $apellido= limpiarcadena($_POST["apellido"]);
     $nombre = limpiarcadena($_POST["nombre"]);
     $cuit = limpiarcadena($_POST["cuit"]);
     $dni = limpiarcadena($_POST["dni"]);
@@ -23,8 +24,7 @@ function insertarEmpleado(){
     $id_tipo_empleado = limpiarcadena($_POST["tipo_empleado"]);
 
     // Atributos no definidos adecuadamente aun
-    $id_rol_persona = limpiarcadena(2);
-    $id_vacacion = limpiarcadena(1);
+    $id_vacacion = null;
 
     // Validar input del nuevo municipio dentro del modal
     if($_REQUEST["new_municipio"]!=""){
@@ -39,7 +39,7 @@ function insertarEmpleado(){
     // Guardar registro en direccion y obtener id_direccion
     $id_direccion = limpiarcadena(guardarDireccion($direccion, $cod_postal));
     // Guardar registro en personas y obtener el id_persona
-    $id_persona = guardarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto, $id_rol_persona);
+    $id_persona = guardarPersona($apellido,$nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto);
 
     // Guardando empleado
     $id_empleado = guardar($id_persona, $id_tipo_empleado, $id_vacacion);

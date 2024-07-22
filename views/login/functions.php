@@ -1,17 +1,12 @@
 <?php
-
+session_start();
 require("../../controllers/LoginController.php");
- //$obj = new LoginController();
- //$import = $obj->authenticate();
-
-//echo $import;
-
-
 
 if(isset($_REQUEST['login'])){
     
     if(LofinController()){
-        header("Location: ./../../views/empleados/index.php");
+        $_SESSION['user']=$_POST['username'];
+        header("Location: ./../dashboard/");
     }else{
         header("Location:index.php?msg=error");
     }
