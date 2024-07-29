@@ -1,83 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- Estilos Propios -->
-    <link rel="stylesheet" href="./../../assets/css/style.css">
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Clinica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./../empleados/index.php">Empleados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./../medicos/index.php">Medicos</a>
-                        </li>
-                        
-                    </ul>
+
+    <?php
+        require_once("./../head/head.php");
+    ?>
+
+    <div class="container-fluid">
+        <h2 class="mt-5 text-center">¡Bienvenido <?=$_SESSION["usuario"]?>!</h2>
+        <div class="row">
+            <div class="col-4  border-end">
+                <div class="perfil-section">
+                    <h4 class="text-center">Mi Perfil</h4>
+                    <div class="perfil-logo">
+                        <img src="./../../assets/img/user.svg" alt="">
+
+                    </div>
+                    <div class="perfil-body">
+                        <h5><span class="text-color">Nombre de Usuario:</span> <?=$_SESSION['user_name']?></h5>
+                        <h5><span class="text-color">Apellido y Nombre:</span> <?=$_SESSION['usuario']?></h5>
+                        <h5><span class="text-color">DNI:</span> <?=$_SESSION['dni']?></h5>
+                        <h5><span class="text-color">Rol de Usuario:</span> <?=$_SESSION['rol_usuario']?></h5>
+                        <?php if($_SESSION['id_rol_usuario']==1): ?>
+                            <div class="btn-perfil">
+                                <a href="./../login/user_list.php" class="btn btn-outline-success">Administrar Usuarios</a>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <h2 class="mt-5 text-center">Inicio</h2>
-        <div class="diseno-section-cards">
-            <a href="./../medicos/index.php">
-            <div class="card" >
-				<!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
-				<div class="card-body">
+            <div class="col-8">
+            <div class="diseno-section-cards ">
+            <?php if($_SESSION['id_rol_usuario']==1 || $_SESSION['id_rol_usuario']==2): ?>
 
-                    <div class="card-logo">
-                        <img src="./../../assets/img/medicos.svg" class="card-svg">
-                    </div>
-                    <h3 class="card-title">Médicos</h3>
-                    <!-- <p class="card-text">Subir el diseño que desea que tenga el vaso, acepta formato de jpg, png, svg y pdf.</p> -->
-                    <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
-                    
-			    </div>
-		    </div>
-            </a>
-            <a href="./../empleados/index.php">
-            <div class="card" >
-				<div class="card-body">
+                <a href="./../medicos/index.php">
+                <div class="card" >
+                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
+                    <div class="card-body">
 
-                    <div class="card-logo">
-                        <img src="./../../assets/img/empleados.svg" class="card-svg">
+                        <div class="card-logo">
+                            <img src="./../../assets/img/medicos.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Médicos</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y revisar información detallada sobre los médicos.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
                     </div>
-                    <h3 class="card-title">Empleados</h3>
-                    <!-- <p class="card-text">Subir el diseño que desea que tenga el vaso, acepta formato de jpg, png, svg y pdf.</p> -->
-                    <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
-                    
-			    </div>
-		    </div>
-            </a>
-            <a href="./../empleados/index.php">
-            <div class="card" >
-				<div class="card-body">
+                </div>
+                </a>
+                <a href="./../empleados/index.php">
+                <div class="card" >
+                    <div class="card-body">
 
-                    <div class="card-logo">
-                        <img src="./../../assets/img/pacientes.svg" class="card-svg">
+                        <div class="card-logo">
+                            <img src="./../../assets/img/empleados.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Empleados</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y consultar información detallada sobre los empleados.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
                     </div>
-                    <h3 class="card-title">Pacientes</h3>
-			    </div>
-		    </div>
-            </a>
+                </div>
+                </a>
+            <?php endif; ?>
+
+            <?php if($_SESSION['id_rol_usuario']==4): ?>
+
+                <!-- Para medicos -->
+                <a href="./../consultas/consultas_medico.php">
+                <div class="card" >
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/consultas_medico.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Mis Consultas Medicas</h3>
+                        <p class="card-text">Accede aqui para ver tus consultas medicas pendientes y atendidas.</p>
+
+                    </div>
+                </div>
+                </a>
+                <?php endif; ?>
+
+            <?php if($_SESSION['id_rol_usuario']==1 || $_SESSION['id_rol_usuario']==3 || $_SESSION['id_rol_usuario']==4):?>
+            
+                <a href="./../pacientes/index.php">
+                <div class="card" >
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/pacientes.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Pacientes</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y consultar información detallada sobre los pacientes.</p>
+
+                    </div>
+                </div>
+                </a>
+            <?php endif; ?>
+
+            <?php if($_SESSION['id_rol_usuario']==1 || $_SESSION['id_rol_usuario']==3):?>
+
+                <a href="#" id="consultasCard">
+                <div class="card" >
+                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/consultas.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Consultas Medicas</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y 
+                            revisar información detallada sobre las consultas medicas.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
+                    </div>
+                </div>
+                </a>
+            <?php endif; ?>
+
+            
+
+            </div>
+
+            <!-- Seccion para las consultas medicas -->
+            <div class="diseno-section-cards d-none">
+                <div class="container-forBack w-100 d-flex justify-content-end align-items-center ">
+                    <button class="btn btn-outline-primary btnBack">Volver</button>
+                </div>
+                <a href="./../consultas/index.php">
+                <div class="card" >
+                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/listado_consultas.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Listado de Consultas</h3>
+                        <p class="card-text">Acceder al listado de todas las consultas 
+                            cargadas en la base de datos.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
+                    </div>
+                </div>
+                </a>
+                <a href="./../consultas/create.php">
+                <div class="card" >
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/new_consultas.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Programar Nueva Consulta </h3>
+                        <p class="card-text">Programar nueva consulta entre un medico y un paciente.</p>
+
+                    </div>
+                </div>
+                </a>
+                
+            </div>
+            </div>
+            
         </div>
-        
-        <a href="<?php echo BASE_URL; ?>/login/logout" class="btn btn-danger">Logout</a>
+    
+    
+    
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-</body>
-</html>
+    
+<?php
+    require_once("./../head/footer.php");
+
+?>

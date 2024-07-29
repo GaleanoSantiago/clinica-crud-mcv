@@ -1,16 +1,18 @@
 
-<body>
     <?php
         require_once("./../head/head.php");
-
         require_once("./../../controllers/EmpleadoController.php");
+        require_once("./../../controllers/PacienteController.php");
         require_once("./../../controllers/AuxiliarController.php");
+
         $municipios = indexMunicipios();
         $tipo_empleados = indexTipoEmpleados();
         $paises = indexPaises();
         $departamentos = indexDepartamentos();
         $provincias = indexProvincias();
-        // var_dump($provincias);
+        $obras_sociales = indexObraSocial();
+        $grupos_sanguineos = indexGrupoSanguineo();
+        // var_dump($obras_sociales);
         // echo "<br><br>";
         // var_dump($paises);
         // die();
@@ -18,10 +20,10 @@
     
     <section>
         <div class="container d-flex flex-column align-items-center">
-            <h1 class="text-center">Guardar Empleado</h1>
-            <?php if(isset($_GET["msg"])=="emplGuard"): ?>
+            <h1 class="text-center">Guardar Paciente</h1>
+            <?php if(isset($_GET["msg"])=="pacGuard"): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Empleado</strong> guardado con exito en la base de datos.
+                    <strong>Paciente</strong> guardado con exito en la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php else: ?>
@@ -29,7 +31,7 @@
             <?php endif; ?>
             <form action="./functions.php" method="POST" autocomplete="off" id="formEmpleados">
                 <!-- input controlado -->
-                <input type="hidden" name="insertEmpleado">
+                <input type="hidden" name="insertPaciente">
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="mb-3">
@@ -42,6 +44,15 @@
                             </label>
                             <input type="number" name="cuit" id="cuitInput" class="form-control" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="obra_social" class="form-label">Obra Social</label>
+                            <select name="obra_social" class="form-select">
+                                <?php foreach($obras_sociales as $obra) :?>
+                                    <option value="<?= $obra["id_obra_social"]?>"><?= $obra["obra_social"]?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+
                         <div class="mb-3 d-flex flex-column ">
                             <label for="" class="form-label">Municipio</label>
                             <select name="municipio" id="municipio" class="form-select">
@@ -66,18 +77,22 @@
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="mb-3">
-                            <label for="tipo_empleado" class="form-label">Tipo de Empleado</label>
-                            <select name="tipo_empleado" id="" class="form-select">
-                                <?php foreach($tipo_empleados as $tipo) :
-                                    if($tipo["tipo_empleado"]!='Medico') :?>
-                                    <option value="<?= $tipo["id_tipo_empleado"]?>"><?= $tipo["tipo_empleado"]?></option>
-                                    <?php endif; ?>
+                            <label for="grupo_sanguineo" class="form-label">Grupo Sanguineo</label>
+                            <select name="grupo_sanguineo" class="form-select">
+                                <?php foreach($grupos_sanguineos as $grupo) :?>
+                                    <option value="<?= $grupo["id_grupo_sanguineo"]?>"><?= $grupo["grupo_sanguineo"]?></option>
                                 <?php endforeach;?>
+                                
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>
                             <input type="number" name="dni" id="dniInput" class="form-control" readonly required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="num_seg_social" class="form-label">Número de Seguro Social</label>
+                            <input type="number" name="num_seg_social" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="direccion" class="form-label">Direccion</label>
@@ -151,3 +166,4 @@
 <?php
     require_once("./../head/footer.php");
 ?>
+

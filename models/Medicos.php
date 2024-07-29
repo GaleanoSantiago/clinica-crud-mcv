@@ -4,7 +4,32 @@ require_once "./../../config/bd.php";
 function indexMedicosModel() {
     $PDO = getConnection();
     // $stament = $PDO->prepare("SELECT * FROM medicos");
-    $stament = $PDO->prepare("SELECT medicos.id_medico, empleados.id_empleado, personas.nombre_persona, especialidades.tipo_especialidad AS especialidad, situaciones_revista.situacion_revista, medicos.numero_colegiado, personas.cuit_persona, personas.dni_persona, municipios.nombre_municipio, direcciones.direccion, direcciones.codigo_postal, contactos.contacto FROM medicos INNER JOIN empleados ON medicos.id_empleado = empleados.id_empleado INNER JOIN personas ON empleados.id_persona = personas.id_persona INNER JOIN especialidades ON medicos.id_especialidad = especialidades.id_especialidad INNER JOIN situaciones_revista ON medicos.id_situacion_revista = situaciones_revista.id_situacion_revista INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto");
+    $stament = $PDO->prepare("SELECT 
+        medicos.id_medico, 
+        empleados.id_empleado, 
+        personas.nombre_persona, 
+        personas.id_persona, 
+        especialidades.tipo_especialidad AS especialidad, 
+        situaciones_revista.situacion_revista, 
+        medicos.numero_colegiado, 
+        personas.cuit_persona, 
+        personas.dni_persona, 
+        municipios.nombre_municipio, 
+        personas.direccion_persona AS direccion, 
+        personas.codigo_postal AS codigo_postal, 
+        personas.contacto_persona AS contacto 
+    FROM 
+        medicos 
+    INNER JOIN 
+        empleados ON medicos.id_empleado = empleados.id_empleado 
+    INNER JOIN 
+        personas ON empleados.id_persona = personas.id_persona 
+    INNER JOIN 
+        especialidades ON medicos.id_especialidad = especialidades.id_especialidad 
+    INNER JOIN 
+        situaciones_revista ON medicos.id_situacion_revista = situaciones_revista.id_situacion_revista 
+    INNER JOIN 
+        municipios ON personas.id_municipio = municipios.id_municipio");
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 // Funcion para mostrar empleados por cargo 
@@ -28,19 +53,6 @@ function MedicosPorEspecialidadModel() {
     return ($stament->execute()) ? $stament->fetchAll() : false;
 }
 
-// Index de Especialidad
-function indexEspecialidadModel() {
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM especialidades");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
-
-// Index de Situacion Revista
-function indexSituacionRevistaModel() {
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT sr.id_situacion_revista, sr.situacion_revista, COALESCE(COUNT(m.id_medico), 0) AS cantidad_registros FROM situaciones_revista sr LEFT JOIN medicos m ON m.id_situacion_revista = sr.id_situacion_revista GROUP BY sr.id_situacion_revista, sr.situacion_revista ORDER BY sr.id_situacion_revista");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
 
 // Insertar Medico
 function insertarMedico($id_empleado, $num_colegiado, $id_especialidad, $id_situacion_revista) {
@@ -58,13 +70,67 @@ function insertarMedico($id_empleado, $num_colegiado, $id_especialidad, $id_situ
     return ($stament->execute()) ? $PDO->lastInsertId() : false;
 }
 
-// Para eliminar empleado
+// Para mostrar Medico
 
-function deleteMedicoModel($id) {
+function showMedicoModel($id){
     $PDO = getConnection();
-    $stament = $PDO->prepare("DELETE FROM `medicos` WHERE `medicos`.`id_medico` =  :id");
+    $stament = $PDO->prepare("SELECT 
+            medicos.id_medico, 
+            empleados.id_empleado, 
+            personas.nombre_persona, 
+            personas.id_persona, 
+            especialidades.tipo_especialidad AS especialidad, 
+            especialidades.id_especialidad, 
+            situaciones_revista.situacion_revista,
+            situaciones_revista.id_situacion_revista,
+            medicos.numero_colegiado, 
+            personas.cuit_persona, 
+            personas.dni_persona, 
+            municipios.nombre_municipio, 
+            municipios.id_municipio, 
+            personas.direccion_persona AS direccion, 
+            personas.codigo_postal AS codigo_postal, 
+            personas.contacto_persona AS contacto, 
+            personas.id_rol_persona 
+        FROM 
+            medicos 
+        INNER JOIN 
+            empleados ON medicos.id_empleado = empleados.id_empleado 
+        INNER JOIN 
+            personas ON empleados.id_persona = personas.id_persona 
+        INNER JOIN 
+            especialidades ON medicos.id_especialidad = especialidades.id_especialidad 
+        INNER JOIN 
+            situaciones_revista ON medicos.id_situacion_revista = situaciones_revista.id_situacion_revista 
+        INNER JOIN 
+            municipios ON personas.id_municipio = municipios.id_municipio
+        WHERE medicos.id_medico = :id
+        ORDER BY empleados.id_empleado limit 1
+    ");
     $stament->bindParam(":id", $id);
-    return ($stament->execute()) ? true : false;
+    return ($stament->execute()) ? $stament->fetchAll() : false;
 }
+
+// Actualizar Medicos
+function updateMedicosModel($id_medico, $id_empleado, $numero_colegiado, $id_especialidad, $id_situacion_revista) {
+    $PDO = getConnection();
+    $statement = $PDO->prepare(
+        "UPDATE `medicos` SET 
+        `id_empleado` = :id_empleado, 
+        `numero_colegiado` = :numero_colegiado, 
+        `id_especialidad` = :id_especialidad, 
+        `id_situacion_revista` = :id_situacion_revista 
+        WHERE `medicos`.`id_medico` = :id_medico"
+    );
+    
+    $statement->bindParam(":id_medico", $id_medico);
+    $statement->bindParam(":id_empleado", $id_empleado);
+    $statement->bindParam(":numero_colegiado", $numero_colegiado);
+    $statement->bindParam(":id_especialidad", $id_especialidad);
+    $statement->bindParam(":id_situacion_revista", $id_situacion_revista);
+
+    return ($statement->execute()) ? $id_medico : false;
+}
+
 
 ?>

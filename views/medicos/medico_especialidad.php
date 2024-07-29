@@ -20,6 +20,8 @@
     <?php
         require_once("./../../controllers/EmpleadoController.php");
         require_once("./../../controllers/MedicoController.php");
+        require_once("./../../controllers/AuxiliarController.php");
+
         $rows = contMedicosPorEspecialidad();
         $medicos = MedicosPorEspecialidad();
         $especialidades = contMedicosPorEspecialidad2();

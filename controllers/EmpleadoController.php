@@ -2,10 +2,6 @@
 
 require_once "./../../models/Empleados.php";
 
-function lastId() {
-    return lastIdModel();
-}
-
 function index() {
     $result = indexModel();
     if ($result) {
@@ -53,8 +49,8 @@ function guardarContacto($email) {
 }
 
 // insertar persona
-function guardarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto, $id_rol_persona) {
-    $id = insertarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto, $id_rol_persona);
+function guardarPersona($nombre, $cuit, $dni, $municipio, $direccion, $contacto, $codigo_postal, $id_rol_persona) {
+    $id = insertarPersona($nombre, $cuit, $dni, $municipio, $direccion, $contacto, $codigo_postal, $id_rol_persona);
     if ($id != false) {
         return $id;
     } else {
@@ -86,58 +82,6 @@ function guardar($id_persona, $id_tipo_empleado, $id_vacacion) {
     }
 }
 
-function indexMunicipios() {
-    $result = indexMunicipiosModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
-
-function indexTipoEmpleados() {
-    $result = indexTipoEmpleadosModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
-
-function indexDepartamentos(){
-    $result = indexDepartamentosModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
-
-function indexPaises(){
-    $result = indexPaisesModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
-
-function indexProvincias(){
-    $result = indexProvinciasModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
-
-function limpiarcadena($campo) {
-    $campo = strip_tags($campo);
-    $campo = filter_var($campo, FILTER_UNSAFE_RAW);
-    $campo = htmlspecialchars($campo);
-    return $campo;
-}
-
 // Para eliminar empleado
 
 function deleteEmpleado($id) {
@@ -150,6 +94,37 @@ function deleteEmpleado($id) {
 
     }
 }
+
+// Para mostrar empleado
+function showEmpleado($id) {
+    $result = showEmpleadoModel($id);
+    if ($result != false) {
+        return $result;
+    } else {
+        // header("Location:show.php?id=".$id);
+        return false;
+
+    }
+}
+
+// Para actualizar Persona
+function updatePersona($id, $nombre, $cuit, $dni, $municipio, $direccion, $contacto, $codigo_postal) {
+    $response = updatePersonaModel($id, $nombre, $cuit, $dni, $municipio, $direccion, $contacto, $codigo_postal);
+    return $response;
+}
+
+// Para actualizar Empleado
+function updateEmpleado($id, $id_persona, $id_tipo_empleado, $id_vacacion) {
+    $id = updateEmpleadoModel($id, $id_persona, $id_tipo_empleado, $id_vacacion);
+    // echo $id;
+    // die();
+    if ($id != false) {
+        return $id;
+    } else {
+        return false;
+    }
+}
+
 
 // ================================= Funciones que no se utlizan todavia =======================================
 

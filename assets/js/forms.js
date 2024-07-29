@@ -1,5 +1,6 @@
 // ----------------- Formulario de Login -----------------
 const formLogin = document.getElementById("formLogin");
+const formPass = document.getElementById("formPass");
 
 // ----------------- Formulario de Empleados -----------------
 const formEmpleados = document.getElementById("formEmpleados") || null;
@@ -75,9 +76,8 @@ const btnMostrarPassword = ()=>{
     })
 }
 
-if(formLogin){
+if(formLogin || formPass){
     btnMostrarPassword();
-    
 }
 
 
@@ -199,3 +199,153 @@ const confirmarEliminacion = (event) => {
         event.preventDefault(); // Evitar el envío del formulario si el usuario cancela
     }
 };
+
+// Para la seccion de consultas
+const disenoSection = document.querySelectorAll(".diseno-section-cards");
+const consultasCard = document.getElementById("consultasCard");
+
+// console.log(disenoSection);
+// console.log(consultasCard);
+
+if(disenoSection && consultasCard){
+    consultasCard.addEventListener("click",()=>{
+        disenoSection[1].classList.remove("d-none");
+        disenoSection[0].classList.add("d-none");
+    })
+    
+    const btnBack = document.querySelector(".btnBack");
+    btnBack.addEventListener("click",()=>{
+        disenoSection[0].classList.remove("d-none");
+        disenoSection[1].classList.add("d-none");
+    })
+}
+
+
+// Para el formulario de consultas
+const selectPacientes = document.getElementById("selectPacientes") || null;
+const rowNewPaciente = document.querySelector(".rowNewPaciente") || null;
+
+if(selectPacientes){
+    const inputsNewPaciente = rowNewPaciente.querySelectorAll("input.form-control") || null;
+
+    selectPacientes.addEventListener("change", function() {
+        const selectedOption = selectPacientes.options[selectPacientes.selectedIndex].value;
+        if (selectedOption === "new_paciente") {
+            rowNewPaciente.classList.remove("d-none");
+            
+            // Poner el required en todos los inputs del new_paciente
+            inputsNewPaciente.forEach(input=>{
+                input.setAttribute('required', '');
+            })
+        } else {
+            if (!rowNewPaciente.classList.contains("d-none")) {
+                rowNewPaciente.classList.add("d-none");
+                
+                // Quitar el required en todos los inputs del new_paciente
+                inputsNewPaciente.forEach(input => {
+                    input.required = false;
+                });
+            }
+        }
+    });
+
+}
+
+
+// ========================= Consultas =========================
+
+// Seleccionar todos los elementos con la clase "estado_consulta"
+// Seleccionar todos los elementos con la clase "estado_consulta"
+const selectEstadoConsultas = document.querySelectorAll(".estado_consulta") || null;
+
+const btnDiagnostico = document.querySelectorAll(".btn-diagnostico") || null;
+const inputIdConsulta = document.getElementById("inputIdConsulta") || null; 
+const descripcionDiagnostico = document.getElementById("descripcionDiagnostico") || null;
+const notasAdicionales = document.getElementById("notasAdicionales") || null;
+
+const btnEnviarModal = document.getElementById("btnEnviarModal") || null;
+
+if (btnDiagnostico) {
+    btnDiagnostico.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const idConsulta = btn.value;
+            inputIdConsulta.value = idConsulta;
+
+            fetch(`functions.php?id_consulta=${idConsulta}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.success) {
+
+                        descripcionDiagnostico.value = data.descripcion_diagnostico;
+                        notasAdicionales.value = data.notas_adicionales;
+                        descripcionDiagnostico.disabled=true;
+                        notasAdicionales.disabled=true;
+                        btnEnviarModal.disabled=true;
+                    } else {
+                        descripcionDiagnostico.value = '';
+                        notasAdicionales.value = '';
+                        descripcionDiagnostico.disabled=false;
+                        notasAdicionales.disabled=false;
+                        btnEnviarModal.disabled=false;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+}
+
+
+// Función para agregar clases de fondo a los options
+function setOptionColors(selectEstadoConsulta) {
+    const options = selectEstadoConsulta.options;
+    if (options.length > 0) {
+        options[0].classList.add("bg-warning", "text-white");
+        options[1].classList.add("bg-success", "text-white");
+        options[2].classList.add("bg-secondary", "text-white");
+        options[3].classList.add("bg-danger", "text-white");
+    }
+    // Encuentra el botón cercano al select
+    const btnDiagnostico = selectEstadoConsulta.closest('tr').querySelector('.btn-diagnostico') || null;
+
+    if(btnDiagnostico){
+
+        if (selectEstadoConsulta.selectedIndex === 1) {
+            btnDiagnostico.disabled = false;
+        } else {
+            btnDiagnostico.disabled = true;
+        }
+    }
+}
+
+// Función para actualizar el color de fondo del select según la opción seleccionada
+function updateSelectColor(event) {
+    const selectEstadoConsulta = event.target;
+    const selectedOption = selectEstadoConsulta.options[selectEstadoConsulta.selectedIndex];
+    const bgColorClass = selectedOption.className.split(' ')[0];
+    selectEstadoConsulta.className = 'form-select text-center ' + bgColorClass;
+}
+// Función para manejar el evento change y enviar el formulario
+function handleSelectChange(event) {
+    const selectEstadoConsulta = event.target;
+    // Encontrar el formulario más cercano al select que cambió
+    const form = selectEstadoConsulta.closest('form');
+    // Enviar el formulario
+    if (form) {
+        form.submit();
+    }
+}
+
+if(selectEstadoConsultas){
+
+    // Aplicar colores de fondo y actualizar el color al cargar la página para cada select
+    selectEstadoConsultas.forEach(selectEstadoConsulta => {
+        setOptionColors(selectEstadoConsulta);
+        updateSelectColor({ target: selectEstadoConsulta }); // Para aplicar el color inicial
+        selectEstadoConsulta.addEventListener("change", updateSelectColor);
+        selectEstadoConsulta.addEventListener("change", handleSelectChange);
+    });
+
+}
+
+

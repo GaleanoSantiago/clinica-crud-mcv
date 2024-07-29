@@ -2,43 +2,35 @@
 require_once "./../../models/User.php";
 
 
-function LofinController(){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+function LoginController($username, $password){
+    
     return Authenticate($username,$password);
 }
-/*
-class LoginController {
-    public function index() {
-        require_once 'views/login/index.php';
-    }
 
-    public function authenticate() {
-        // Lógica para autenticar al usuario
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+function showUser($id){
+    $result = showUserModel($id);
+    if ($result != false) {
+        return $result;
+    } else {
+        // header("Location:show.php?id=".$id);
+        return false;
 
-        // Validar usuario
-        $userModel = new User();
-        $user = $userModel->getUserByUsernameAndPassword($username, $password);
-
-        if ($user) {
-            $_SESSION['user_id'] = $user['id'];
-            // header('Location: ' . BASE_URL . '/dashboard/index');
-            return $_SESSION['user_id'];
-        } else {
-            // Redirigir al login con un mensaje de error
-            header('Location: ' . BASE_URL . '/login/index?error=invalid_credentials');
-        }
-    }
-
-    public function logout() {
-        session_destroy();
-        header('Location: ' . BASE_URL . '/login/index');
-    }
-
-    public function prueba(){
-        return "<h1>LoginController imported</h1>";
     }
 }
-*/
+
+function indexUsuarios(){
+    $result=indexUsuariosModel();
+    return $result;
+}
+
+
+function insertarUsuario($id_persona, $id_rol_usuario, $user_name, $password){
+    $result = insertarUsuarioModelo($id_persona, $id_rol_usuario, $user_name, $password);
+    return $result;
+}
+
+// Eliminar usuario
+function eliminarUsuario($id_usuario){
+    $result = eliminarUsuarioModal($id_usuario);
+    return $result;
+}

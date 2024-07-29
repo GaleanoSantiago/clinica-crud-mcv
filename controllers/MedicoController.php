@@ -2,10 +2,6 @@
 
 require_once "./../../models/Medicos.php";
 
-// function lastId() {
-//     return lastIdModel();
-// }
-
 function indexMedicos() {
     $result = indexMedicosModel();
     if ($result) {
@@ -40,25 +36,7 @@ function MedicosPorEspecialidad() {
         return false;
     }
 }
-// index de Especialidad
-function indexEspecialidad() {
-    $result = indexEspecialidadModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
 
-// index de Situacion Revista
-function indexSituacionRevista() {
-    $result = indexSituacionRevistaModel();
-    if ($result) {
-        return $result;
-    } else {
-        return false;
-    }
-}
 // Guardar Medico
 function guardarMedico($id_empleado, $num_colegiado, $id_especialidad, $id_situacion_revista) {
     $id = insertarMedico($id_empleado, $num_colegiado, $id_especialidad, $id_situacion_revista);
@@ -73,18 +51,28 @@ function guardarMedico($id_empleado, $num_colegiado, $id_especialidad, $id_situa
     }
 }
 
-// Para eliminar Medico. NO SE USA
-// Para eliminar un medico en realidad se utiliza la funcion
-// para eliminar empleado del EmpleadoController.php debido la
-// relacion en cascada que tienen las dos tablas
-
-function deleteMedico($id) {
-    $result = deleteMedicoModel($id);
+// Para mostrar Medico
+function showMedico($id) {
+    $result = showMedicoModel($id);
     if ($result != false) {
-        header("Location:index.php?msg=elimSuccs");
+        return $result;
     } else {
         // header("Location:show.php?id=".$id);
-        echo "No se elimino el registro";
+        return false;
+
     }
 }
+
+// para actualizar medico
+function updateMedico($id_medico, $id_empleado, $numero_colegiado, $id_especialidad, $id_situacion_revista) {
+    $id = updateMedicosModel($id_medico, $id_empleado, $numero_colegiado, $id_especialidad, $id_situacion_revista);
+    // echo $id;
+    // die();
+    if ($id != false) {
+        return $id;
+    } else {
+        return false;
+    }
+}
+
 ?>

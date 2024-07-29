@@ -9,21 +9,19 @@ function indexModel() {
     $stament = $PDO->prepare("SELECT empleados.id_empleado, 
                                 personas.id_persona, 
                                 personas.nombre_persona, 
+                                personas.direccion_persona, 
+                                personas.contacto_persona, 
+                                personas.codigo_postal, 
                                 tipos_empleado.tipo_empleado, 
                                 personas.cuit_persona, 
                                 personas.dni_persona, 
-                                municipios.nombre_municipio, 
-                                direcciones.direccion, 
-                                direcciones.codigo_postal, 
-                                contactos.contacto, 
+                                municipios.nombre_municipio,
                                 vacaciones.fecha_inicio, 
                                 vacaciones.fecha_fin 
                             FROM empleados 
                             INNER JOIN personas ON empleados.id_persona = personas.id_persona 
                             INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado 
                             INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio 
-                            INNER JOIN direcciones ON personas.id_direccion = direcciones.id_direccion 
-                            INNER JOIN contactos ON personas.id_contacto = contactos.id_contacto 
                             INNER JOIN vacaciones ON vacaciones.id_vacacion = empleados.id_vacacion 
                             ORDER BY empleados.id_empleado");
     return ($stament->execute()) ? $stament->fetchAll() : false;
@@ -87,20 +85,21 @@ function insertarContacto($email){
 }
 
 // Insertar personas
-function insertarPersona($nombre, $cuit, $dni, $municipio, $id_direccion, $id_contacto, $id_rol_persona) {
+function insertarPersona($nombre, $cuit, $dni, $municipio, $direccion, $contacto, $codigo_postal, $id_rol_persona) {
     $PDO = getConnection();
     $stament = $PDO->prepare(
         "INSERT INTO personas VALUES 
-        (NULL, :nombre, :cuit, :dni, :municipio, :id_direccion, 
-        :id_contacto, :id_rol_persona)"
+        (NULL, :nombre, :cuit, :dni, :municipio, :direccion, 
+        :contacto, :codigo_postal, :id_rol_persona)"
     );
     
     $stament->bindParam(":nombre", $nombre);
     $stament->bindParam(":cuit", $cuit);
     $stament->bindParam(":dni", $dni);
     $stament->bindParam(":municipio", $municipio);
-    $stament->bindParam(":id_direccion", $id_direccion);
-    $stament->bindParam(":id_contacto", $id_contacto);
+    $stament->bindParam(":direccion", $direccion);
+    $stament->bindParam(":contacto", $contacto);
+    $stament->bindParam(":codigo_postal", $codigo_postal);
     $stament->bindParam(":id_rol_persona", $id_rol_persona);
 
     return ($stament->execute()) ? $PDO->lastInsertId() : false;
@@ -135,51 +134,98 @@ function insertar($id_persona, $id_tipo_empleado, $id_vacacion) {
     return ($stament->execute()) ? $PDO->lastInsertId() : false;
 }
 
-// Index de Municipios
-function indexMunicipiosModel() {
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM municipios");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
-
-// Index de Tipo Empleados
-function indexTipoEmpleadosModel() {
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM tipos_empleado");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
-
-// Index de Departamentos
-function indexDepartamentosModel(){
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM departamentos");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
-
-// Index de Paises
-function indexPaisesModel(){
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM paises");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
-
-// Index de Provincias
-function indexProvinciasModel(){
-    $PDO = getConnection();
-    $stament = $PDO->prepare("SELECT * FROM provincias");
-    return ($stament->execute()) ? $stament->fetchAll() : false;
-}
-
 // Para eliminar empleado
 
 
 function deleteEmpleadoModel($id) {
     $PDO = getConnection();
-    $stament = $PDO->prepare("DELETE FROM `empleados` WHERE `empleados`.`id_empleado` = :id");
+    $stament = $PDO->prepare("DELETE FROM `personas` WHERE `personas`.`id_persona` = :id");
     $stament->bindParam(":id", $id);
     return ($stament->execute()) ? true : false;
 }
 
+// Para mostrar empleado
+
+function showEmpleadoModel($id){
+    $PDO = getConnection();
+    $stament = $PDO->prepare("SELECT empleados.id_empleado, 
+                                empleados.id_tipo_empleado,
+                                personas.id_persona, 
+                                personas.nombre_persona, 
+                                personas.direccion_persona, 
+                                personas.contacto_persona, 
+                                personas.codigo_postal, 
+                                tipos_empleado.tipo_empleado, 
+                                tipos_empleado.id_tipo_empleado,
+                                personas.cuit_persona, 
+                                personas.dni_persona, 
+                                municipios.nombre_municipio, 
+                                municipios.id_municipio,
+                                vacaciones.fecha_inicio, 
+                                vacaciones.fecha_fin,
+                                personas.id_rol_persona 
+
+                            FROM empleados 
+                            INNER JOIN personas ON empleados.id_persona = personas.id_persona 
+                            INNER JOIN tipos_empleado ON empleados.id_tipo_empleado = tipos_empleado.id_tipo_empleado 
+                            INNER JOIN municipios ON personas.id_municipio = municipios.id_municipio
+                            INNER JOIN vacaciones ON vacaciones.id_vacacion = empleados.id_vacacion 
+                            WHERE empleados.id_empleado = :id
+                            ORDER BY empleados.id_empleado limit 1
+    ");
+    $stament->bindParam(":id", $id);
+    return ($stament->execute()) ? $stament->fetchAll() : false;
+}
+
+// Actualizar personas
+function updatePersonaModel($id, $nombre, $cuit, $dni, $municipio, $direccion, $contacto, $codigo_postal) {
+    $PDO = getConnection();
+    $stament = $PDO->prepare(
+        "UPDATE personas SET 
+        nombre_persona = :nombre, 
+        cuit_persona = :cuit, 
+        dni_persona = :dni, 
+        id_municipio = :municipio, 
+        direccion_persona = :direccion, 
+        contacto_persona = :contacto, 
+        codigo_postal = :codigo_postal 
+        WHERE id_persona = :id"
+    );
+    
+    $stament->bindParam(":id", $id);
+    $stament->bindParam(":nombre", $nombre);
+    $stament->bindParam(":cuit", $cuit);
+    $stament->bindParam(":dni", $dni);
+    $stament->bindParam(":municipio", $municipio);
+    $stament->bindParam(":direccion", $direccion);
+    $stament->bindParam(":contacto", $contacto);
+    $stament->bindParam(":codigo_postal", $codigo_postal);
+
+    return $stament->execute();
+}
+
+// Actualizar empleados
+function updateEmpleadoModel($id, $id_persona, $id_tipo_empleado, $id_vacacion) {
+    $PDO = getConnection();
+    $stament = $PDO->prepare(
+        "UPDATE empleados SET 
+        id_persona = :id_persona, 
+        id_tipo_empleado = :id_tipo_empleado, 
+        id_vacacion = :id_vacacion 
+        WHERE id_empleado = :id"
+    );
+    
+    $stament->bindParam(":id", $id);
+    $stament->bindParam(":id_persona", $id_persona);
+    $stament->bindParam(":id_tipo_empleado", $id_tipo_empleado);
+    $stament->bindParam(":id_vacacion", $id_vacacion);
+
+    // return ($stament->execute()) ? $stament->fetchAll() : false;
+    return ($stament->execute()) ? $id : false;
+    // echo $PDO->lastInsertId();
+    // die();
+    // return $stament->execute();
+}
 
 // ================================= Funciones que no se utlizan todavia =======================================
 function lastIdModel() {
