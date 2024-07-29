@@ -41,7 +41,7 @@
                     <tr>
                         <th>ID Consulta</th>
                         
-                        <th style="width:200px;">Paciente</th>
+                        <th style="width:150px;">Paciente</th>
                         <th>Obra Social</th>
                         <th>Grupo Sanguineo</th>
                         <th>N° Seguro Social</th>
@@ -49,8 +49,8 @@
                         <th>DNI</th>
                         <th>Contacto</th>
                         <th style="width:200px;">Fecha y Hora</th>
-                        <th style="width:200px;">Médico</th>
-                        <th style="width:200px;">Estado Consulta</th>
+                        <th style="width:150px;">Médico</th>
+                        <th style="width:240px;">Estado Consulta</th>
                         <th colspan="2">Funciones</th>
                     </tr>
                 </thead>
