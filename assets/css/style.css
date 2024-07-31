@@ -123,13 +123,16 @@ table{
     color:var(--blueRetro);
 }
 /* ----------------------------- NavBar bootstrap ------------------------------- */
-nav.navbar{
+nav.navbar, nav .dropdown-menu, nav .dropdown-menu.show{
     /* background: #4682B4; */
     /* background: #7B68EE; */
     /* background:#6A5ACD; */
     background:var(--blueBright);
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    color:var(--blueRetro);
+    color:var(--bs-light) !important;
+}
+nav .dropdown-item:hover{
+    background:var(--lightBlue);
 }
 nav .nav-link{
     color:#fff !important;
@@ -219,6 +222,8 @@ thead{
     padding: 2px !important;
 }
 
+/* =================================== dashboard ================================ */
+
 /*=============== Nuevos diseños de las opciones de diseño ===============*/
 
 .diseno-section-cards{
@@ -227,6 +232,10 @@ thead{
     height:550px;
     overflow-y: scroll;
 	/* flex-wrap:wrap; */
+    /* position:relative; */
+    /* z-index:1; */
+    /* padding-top:30px; */
+
 }
 .diseno-section-cards a{
     text-decoration: none;
@@ -294,6 +303,50 @@ thead{
     /* align-items:center; */
 
 }
+.container-forBack {
+    padding:0 100px !important;
+    height:fit-content;
+    /* position:absolute; */
+    /* top:1px; */
+    /* z-index:2 !important; */
+}
+
+.btn-updateModal, #deleteBtn{
+    width:50%;
+}
+
+.btn-updateModal{
+    transition: all .3s ease-in-out;
+    border:1px solid var(--bs-primary);
+    background:transparent;
+    color:var(--bs-primary);
+
+}
+
+.btn-updateModal:hover{
+    transition: all .3s ease-in-out;
+    background:var(--bs-primary);
+    color:#fff;
+
+}
+.btn-updateModal.active{
+    border:1px solid var(--bs-secondary);
+    background:transparent;
+    color:var(--bs-secondary);
+}
+.btn-updateModal.active:hover{
+    background:var(--bs-secondary);
+    color:#fff;
+}
+
+.container-forBack button{
+    height:fit-content;
+}
+
+#estado_consulta option{
+    padding:30px 0 !important;
+}
+
 
 /* =================================== Usuario ================================ */
 .perfil-section{
@@ -334,22 +387,33 @@ thead{
     padding:10px;
 }
 
-.container-forBack {
-    padding:0 100px !important;
+
+
+
+/* =================================== Consultas ================================ */
+.btnContainer{
+    align-items:center;
+}
+.btnContainer button, .btnContainer a{
     height:fit-content;
-    
 }
 
-/* =================================== dashboard ================================ */
+.formFliltroFecha{
+    padding:10px 15px;
+    background:#f2f2f2;
+    /* background:var(--blueBright); */
+    border-radius:5px;
 
-.container-forBack button{
-    height:fit-content;
+}
+.formFliltroFecha form{
+    display:flex;
+    width:100%;
+    gap:5px;
 }
 
-#estado_consulta option{
-    padding:30px 0 !important;
-}
 
+
+/* =================================== Footer ================================ */
 
 footer{
     padding:10px 0;

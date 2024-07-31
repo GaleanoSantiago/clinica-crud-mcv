@@ -78,3 +78,34 @@ function guardarDiagnosticoModel($id_consulta, $descripcion, $notas_adicionales)
 
     return ($stament->execute()) ? $PDO->lastInsertId() : false;
 }
+
+// Actualizar diagnostico
+function updateDiagnosticoModel($id, $descripcion, $notas) {
+
+    $PDO = getConnection();
+    $stament = $PDO->prepare(
+        "UPDATE `diagnostico_consulta` 
+        SET `descripcion_diagnostico` = :descripcion, `notas_adicionales` = :notas 
+        WHERE `diagnostico_consulta`.`id_consulta` = :id"
+    );
+
+    // Vincular parámetros
+    $stament->bindParam(":id", $id);
+    $stament->bindParam(":descripcion", $descripcion);
+    $stament->bindParam(":notas", $notas);
+
+    // Ejecutar la sentencia
+    // return ($stament->execute()) ? $stament->fetchAll() : false;
+    return $stament->execute();
+}
+
+// Para eliminar Consulta
+function deleteDiagnosticoModel($id) {
+    $PDO = getConnection();
+    $stament = $PDO->prepare("DELETE FROM `diagnostico_consulta` 
+    WHERE `diagnostico_consulta`.`id_consulta` = :id");
+
+    $stament->bindParam(":id", $id);
+    
+    return ($stament->execute()) ? true : false;
+}

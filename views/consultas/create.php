@@ -152,7 +152,13 @@
                         <div class="mb-3 d-flex justify-content-around">
                             <input type="submit" value="Guardar" class="btn btn-success">
                             <!-- <input type="reset" value="Reset" class="btn btn-danger"> -->
-                            <a href="./index.php" class="btn btn-danger">Cancelar</a>
+                            <?php if($_SESSION['id_rol_usuario']==4): ?>
+                                <a href="./consultas_medico.php" class="btn btn-danger">Cancelar</a>
+                            <?php else: ?>
+                                <a href="./index.php" class="btn btn-danger">Cancelar</a>
+                            
+                            <?php endif; ?>
+                            
                         </div>
                     </div>
                 </div>

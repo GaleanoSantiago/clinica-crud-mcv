@@ -12,6 +12,11 @@ function consultasPorMedico($id){
     return $rows;
 }
 
+function consultasPorMedicoFecha($dni, $fecha){
+    $rows = consultasPorMedicoFechaModel($dni, $fecha);
+    return $rows;
+}
+
 function guardarConsulta($fecha_hora, $id_medico, $id_paciente){
     $id = guardarConsultaModel($fecha_hora, $id_medico, $id_paciente);
     return $id;

@@ -19,13 +19,21 @@ if(isset($_REQUEST['insertConsulta'])){
     if($response){
         header("Location:index.php?msg=elimSucc");
     }
+
 }elseif(isset($_REQUEST["cambiarEstado"])){
+
     $response = cambiarEstadoConsulta();
+    
     if($response){
         if(isset($_REQUEST["filtroMedico"])){
-            
-            header("Location:consultas_medico.php");
 
+            if(isset($_REQUEST["fechaFiltro"])){
+
+                $fecha = $_REQUEST["fechaFiltro"];
+                header("Location:consultas_medico.php?fecha=$fecha");
+            }else{  
+                header("Location:consultas_medico.php");
+            }
         }else{
             header("Location:index.php");
 
@@ -33,15 +41,50 @@ if(isset($_REQUEST['insertConsulta'])){
 
     }
 }elseif(isset($_REQUEST["insertDiagnostico"])){
+    
     $response = insertarDiagnostico();
     if($response){
-        header("Location:consultas_medico.php?msg=diagnosticoSuccs");
+        if(isset($_REQUEST["fechaFiltro"])){
+
+            $fecha = $_REQUEST["fechaFiltro"];
+            header("Location:consultas_medico.php?msg=diagnosticoSuccs&fecha=$fecha");
+        }else{  
+            header("Location:consultas_medico.php?msg=diagnosticoSuccs");
+        }
     }
+}elseif(isset($_REQUEST["updateDiagnostico"])){
+    
+    $response = actualizarDiagnostico();
+    if($response){
+        if(isset($_REQUEST["fechaFiltro"])){
+
+            $fecha = $_REQUEST["fechaFiltro"];
+            header("Location:consultas_medico.php?msg=actSuccs&fecha=$fecha");
+        }else{  
+            header("Location:consultas_medico.php?msg=actSuccs");
+        }
+    }else{
+        echo "error";
+    }
+
 }elseif(isset($_GET['id_consulta'])){
+    
     $idConsulta = $_GET['id_consulta'];
     echo fetchDiagnosticoData($idConsulta);
-} else {
-    echo json_encode(['success' => false]);
+
+}elseif(isset($_REQUEST["deleteDiagnostico"])){
+    $response = borrarDiagnostico();
+    if($response){
+        if(isset($_REQUEST["fechaFiltro"])){
+
+            $fecha = $_REQUEST["fechaFiltro"];
+            header("Location:consultas_medico.php?msg=elimSuccs&fecha=$fecha");
+        }else{  
+            header("Location:consultas_medico.php?msg=elimSuccs");
+        }
+    }else{
+        echo "error";
+    }
 }
 
 
@@ -82,10 +125,6 @@ function borrarConsulta(){
 function cambiarEstadoConsulta(){
     $id_consulta = $_REQUEST["id_consulta"];
     $id_estado_consulta = $_REQUEST["estado_consulta"];
-    
-    // echo $id_consulta;
-    // echo "<br>";
-    // echo $id_estado_consulta;
 
     $response = updateEstadoConsulta($id_estado_consulta, $id_consulta);
     return $response;
@@ -108,11 +147,7 @@ function insertarDiagnostico(){
 
 function fetchDiagnosticoData($idConsulta) {
     $diagnostico = showDiagnostico($idConsulta);
-    // var_dump($diagnostico);
-    // // die();
-    // echo "<br>";
-    // echo "<br>";
-    // echo "<br>";
+
     if ($diagnostico) {
         foreach($diagnostico as $diag){
 
@@ -127,4 +162,23 @@ function fetchDiagnosticoData($idConsulta) {
         return json_encode(['success' => false]);
     }
 }
+
+function actualizarDiagnostico(){
+    $id_consulta = $_REQUEST["id_consulta"];
+    $descripcion = $_REQUEST["descripcion_diagnostico"];
+    $notas_adicionales = $_REQUEST["notas_adicionales"];
+
+    $response = updateDiagnostico($id_consulta, $descripcion, $notas_adicionales);
+    return $response;
+
+}
+
+// Borrar consulta
+
+function borrarDiagnostico(){
+    $id = $_REQUEST["id_consulta"];
+    $response = deleteDiagnostico($id);
+    return $response;
+}
+
 ?>

@@ -12,7 +12,18 @@ function showDiagnostico($id) {
 }
 
 function guardarDiagnostico($id_consulta, $descripcion, $notas_adicionales){
+
     $response = guardarDiagnosticoModel($id_consulta, $descripcion, $notas_adicionales);
     return $response;
 }
 
+function updateDiagnostico($id, $descripcion, $notas){
+
+    $response = updateDiagnosticoModel($id, $descripcion, $notas);
+    return $response;
+}
+
+function deleteDiagnostico($id){
+    $response = deleteDiagnosticoModel($id);
+    return $response;
+}

@@ -201,23 +201,39 @@ const confirmarEliminacion = (event) => {
 };
 
 // Para la seccion de consultas
-const disenoSection = document.querySelectorAll(".diseno-section-cards");
-const consultasCard = document.getElementById("consultasCard");
 
-// console.log(disenoSection);
-// console.log(consultasCard);
+const cards = document.querySelectorAll('.card-link') || null;
+const btnsBack = document.querySelectorAll('.btnBack') || null;
 
-if(disenoSection && consultasCard){
-    consultasCard.addEventListener("click",()=>{
-        disenoSection[1].classList.remove("d-none");
-        disenoSection[0].classList.add("d-none");
-    })
+if(cards && btnsBack){
+    cards.forEach(card => {
+        card.addEventListener('click', event => {
+            event.preventDefault();
+            const target = card.getAttribute('data-target');
     
-    const btnBack = document.querySelector(".btnBack");
-    btnBack.addEventListener("click",()=>{
-        disenoSection[0].classList.remove("d-none");
-        disenoSection[1].classList.add("d-none");
-    })
+            // Ocultar todas las secciones
+            document.querySelectorAll('.diseno-section-cards').forEach(section => {
+                section.classList.add('d-none');
+            });
+    
+            // Mostrar la sección seleccionada
+            document.getElementById(target).classList.remove('d-none');
+        });
+    });
+    
+    btnsBack.forEach(button => {
+        button.addEventListener('click', () => {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.diseno-section-cards').forEach(section => {
+                section.classList.add('d-none');
+            });
+    
+            // Mostrar la sección principal
+            document.querySelector('.diseno-section-cards').classList.remove('d-none');
+        });
+    });
+    
+
 }
 
 
@@ -264,6 +280,7 @@ const descripcionDiagnostico = document.getElementById("descripcionDiagnostico")
 const notasAdicionales = document.getElementById("notasAdicionales") || null;
 
 const btnEnviarModal = document.getElementById("btnEnviarModal") || null;
+const updateDiv = document.getElementById("updateDiv") || null;
 
 if (btnDiagnostico) {
     btnDiagnostico.forEach(btn => {
@@ -282,12 +299,18 @@ if (btnDiagnostico) {
                         descripcionDiagnostico.disabled=true;
                         notasAdicionales.disabled=true;
                         btnEnviarModal.disabled=true;
+
+                        updateDiv.classList.remove("d-none");
+
                     } else {
                         descripcionDiagnostico.value = '';
                         notasAdicionales.value = '';
                         descripcionDiagnostico.disabled=false;
                         notasAdicionales.disabled=false;
                         btnEnviarModal.disabled=false;
+                        if (!updateDiv.classList.contains("d-none")) {
+                            updateDiv.classList.add("d-none");
+                        }
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -295,6 +318,41 @@ if (btnDiagnostico) {
     });
 }
 
+
+const updateBtn = document.getElementById("updateBtn") || null;
+const inputDiagnostico = document.getElementById("inputDiagnosticoModal") || null;
+const deleteBtn = document.getElementById("deleteBtn") || null;
+
+let update = false;
+if(updateBtn){
+    updateBtn.addEventListener("click",(e)=>{
+        e.preventDefault();
+        if(!update){
+            // Para reahilitar los inputs y cambiar el input:hidden a update
+            notasAdicionales.disabled=false;
+            descripcionDiagnostico.disabled=false;
+            inputDiagnostico.name="updateDiagnostico";
+            btnEnviarModal.disabled=false;
+            updateBtn.textContent="Cancelar";
+            updateBtn.classList.add("active");
+            update = true;
+        }else{
+            notasAdicionales.disabled=true;
+            descripcionDiagnostico.disabled=true;
+            inputDiagnostico.name="insertDiagnostico";
+            updateBtn.textContent="Actualizar";            
+            btnEnviarModal.disabled=true;
+            updateBtn.classList.remove("active");
+            update = false;
+        }
+    })
+    
+    // Para eliminar
+    deleteBtn.addEventListener("click",()=>{
+        inputDiagnostico.name="deleteDiagnostico";
+        
+    })
+}
 
 // Función para agregar clases de fondo a los options
 function setOptionColors(selectEstadoConsulta) {
@@ -349,3 +407,17 @@ if(selectEstadoConsultas){
 }
 
 
+// Obtener la fecha actual
+const hoy = new Date();
+        
+// Formatear la fecha al formato yyyy-mm-dd
+const yyyy = hoy.getFullYear();
+const mm = String(hoy.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+const dd = String(hoy.getDate()).padStart(2, '0');
+
+const fechaActual = `${yyyy}-${mm}-${dd}`;
+
+// Asignar el valor al input
+const fechaInput = document.getElementById('filtroFecha') || null;
+
+// fechaInput.value = fechaActual;

@@ -32,7 +32,7 @@
             <div class="diseno-section-cards ">
             <?php if($_SESSION['id_rol_usuario']==1 || $_SESSION['id_rol_usuario']==2): ?>
 
-                <a href="./../medicos/index.php">
+                <a href="#" class="card-link" data-target="medicos-section">
                 <div class="card" >
                     <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
                     <div class="card-body">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 </a>
-                <a href="./../empleados/index.php">
+                <a href="#" class="card-link" data-target="empleados-section">
                 <div class="card" >
                     <div class="card-body">
 
@@ -83,7 +83,7 @@
 
             <?php if($_SESSION['id_rol_usuario']==1 || $_SESSION['id_rol_usuario']==3 || $_SESSION['id_rol_usuario']==4):?>
             
-                <a href="./../pacientes/index.php">
+                <a href="#" class="card-link" data-target="pacientes-section">
                 <div class="card" >
                     <div class="card-body">
 
@@ -100,7 +100,7 @@
 
             <?php if($_SESSION['id_rol_usuario']==1 || $_SESSION['id_rol_usuario']==3):?>
 
-                <a href="#" id="consultasCard">
+                <a href="#" class="card-link" data-target="consultas-section" id="consultasCard">
                 <div class="card" >
                     <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
                     <div class="card-body">
@@ -122,14 +122,13 @@
 
             </div>
 
-            <!-- Seccion para las consultas medicas -->
-            <div class="diseno-section-cards d-none">
+            <!----------------------------- Seccion para las consultas medicas ------------------------------->
+            <div id="consultas-section" class="diseno-section-cards d-none">
                 <div class="container-forBack w-100 d-flex justify-content-end align-items-center ">
                     <button class="btn btn-outline-primary btnBack">Volver</button>
                 </div>
                 <a href="./../consultas/index.php">
                 <div class="card" >
-                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
                     <div class="card-body">
 
                         <div class="card-logo">
@@ -138,7 +137,6 @@
                         <h3 class="card-title">Listado de Consultas</h3>
                         <p class="card-text">Acceder al listado de todas las consultas 
                             cargadas en la base de datos.</p>
-                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
                         
                     </div>
                 </div>
@@ -158,8 +156,120 @@
                 </a>
                 
             </div>
+
+            <!----------------------------- Seccion para los medicos ------------------------------->
+
+            <div id="medicos-section" class="diseno-section-cards d-none">
+                <div class="container-forBack w-100 d-flex justify-content-end align-items-center ">
+                    <button class="btn btn-outline-primary btnBack">Volver</button>
+                </div>
+                <a href="./../medicos/index.php">
+                <div class="card" >
+                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/list_medicos.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Lista de Médicos</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y revisar información detallada sobre los médicos.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
+                    </div>
+                </div>
+                </a>
+                <a href="./../medicos/create.php">
+                <div class="card" >
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/new_medicos.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Agregar Nuevo Medico </h3>
+                        <p class="card-text">Agregar nuevo médico en el sistema.</p>
+
+                    </div>
+                </div>
+                </a>
+                
+            </div>
+
+            <!----------------------------- Seccion para los medicos ------------------------------->
+
+            <div id="empleados-section" class="diseno-section-cards d-none">
+                <div class="container-forBack w-100 d-flex justify-content-end align-items-center ">
+                    <button class="btn btn-outline-primary btnBack">Volver</button>
+                </div>
+                <a href="./../empleados/index.php">
+                <div class="card" >
+                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/list_empleados.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Lista de Empleados</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y revisar información detallada sobre los empleados.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
+                    </div>
+                </div>
+                </a>
+                <a href="./../empleados/create.php">
+                <div class="card" >
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/new_empleados.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Agregar Nuevo Empleado </h3>
+                        <p class="card-text">Agregar un nuevo miembro del personal del hospital en el sistema.</p>
+
+                    </div>
+                </div>
+                </a>
+                
             </div>
             
+            <!----------------------------- Seccion para los medicos ------------------------------->
+
+            <div id="pacientes-section" class="diseno-section-cards d-none">
+                <div class="container-forBack w-100 d-flex justify-content-end align-items-center ">
+                    <button class="btn btn-outline-primary btnBack">Volver</button>
+                </div>
+                <a href="./../pacientes/index.php">
+                <div class="card" >
+                    <!-- <span class="text-success card-span"><i class="fa fa-check"></i> SELECCIONADO</span> -->
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/listado_consultas.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Lista de Pacientes</h3>
+                        <p class="card-text">Accede aquí para gestionar, actualizar y revisar información detallada sobre los pacientes.</p>
+                        <!-- <button class="btn btn-outline-success btn-card">Seleccionar Opcion de Diseño</button> -->
+                        
+                    </div>
+                </div>
+                </a>
+                <a href="./../pacientes/create.php">
+                <div class="card" >
+                    <div class="card-body">
+
+                        <div class="card-logo">
+                            <img src="./../../assets/img/pacientes.svg" class="card-svg">
+                        </div>
+                        <h3 class="card-title">Agregar Nuevo Paciente</h3>
+                        <p class="card-text">Agregar un nuevo paciente en el sistema.</p>
+
+                    </div>
+                </div>
+                </a>
+                
+            </div>
+
+
+            </div>
         </div>
     
     

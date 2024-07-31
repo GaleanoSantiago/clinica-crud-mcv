@@ -5,7 +5,17 @@
         require_once("./../../controllers/DiagnosticoController.php");
         require_once("./../../controllers/AuxiliarController.php");
 
-        $rows = consultasPorMedico($_SESSION["dni"]);
+        if(isset($_REQUEST['fecha'])){
+            $rows = consultasPorMedicoFecha($_SESSION["dni"], $_REQUEST["fecha"]);
+            $fecha = $_REQUEST["fecha"];
+            $response = true;
+        }else{
+            $rows = consultasPorMedico($_SESSION["dni"]);
+            // Obtener la fecha actual en el formato YYYY-MM-DD
+            $fecha = date('Y-m-d');
+            $response = false;
+
+        }
         $estado_consultas = indexEstadoConsultas();
         // var_dump(showDiagnostico(7));
         // die();
@@ -19,27 +29,43 @@
         <div class="container-fluid" >
             <h1 class="text-center">Consultas Medicas de <?=$_SESSION["usuario"]?></h1>
             
-            <div class="mb-3 d-flex justify-content-around">
+            <div class="btnContainer mb-3 d-flex justify-content-around">
                     
                     <a href="./create.php" class="btn btn-success">Programar Consulta</a>
                 
-                <div class="d-flex gap-4">
+                <div class="d-flex gap-4 align-items-center">
                     <!-- Button trigger modal -->
                     <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Filtrar Datos
                     </button> -->
+                    <div class="formFliltroFecha ">
+                        <form action="./consultas_medico.php" method="">
+                            <input type="date" name="fecha"  id="filtroFecha" value="<?= $fecha ?>" class="form-control" required>
+                            <input type="submit" class="btn btn-info" value="Fltrar por Fecha">
+                            <?php if($response): ?>
+                                <a href="./consultas_medico.php" style="min-width:120px;" class="btn btn-warning">Limpiar Filtro</a>
+                            <?php endif; ?>
+
+                        </form>
+                    </div>
                     <button id="exportPDF" class="btn btn-outline-warning">Exportar a PDF</button>
                     <button id="exportExcel" class="btn btn-outline-success">Exportar a Excel</button>
                 </div>
             </div>
+            
             <?php if(isset($_GET["msg"]) && $_GET["msg"] == "elimSuccs"): ?>
                 <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
-                    <strong>Consulta</strong> eliminada con éxito de la base de datos.
+                    <strong>Diagnostico</strong> eliminada con éxito de la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php elseif(isset($_GET["msg"]) && $_GET["msg"] == "diagnosticoSuccs"): ?>
                 <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
                     <strong>Diagnostico</strong> almacenado con éxito en la base de datos.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php elseif(isset($_GET["msg"]) && $_GET["msg"] == "actSuccs"): ?>
+                <div class="alert alert-success alert-dismissible fade show w-100" role="alert">
+                    <strong>Diagnostico</strong> actualizado con éxito en la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php else: ?>
@@ -84,7 +110,10 @@
                             <form action="./functions.php" method="POST" style="width:100%;">
                                 <input type="hidden" name="cambiarEstado">
                                 <input type="hidden" name="filtroMedico">
-
+                                <?php if($response): ?> 
+                                    <input type="hidden" name="fechaFiltro" value="<?=$fecha?>">
+                                <?php endif; ?> 
+                                
                                 <input type="hidden" name="id_consulta" value="<?= $row['id_consulta']?>">
                                 
                                 <select name="estado_consulta" id="estado_consulta" class="form-select text-center estado_consulta" style="color:#fff;">
@@ -108,7 +137,7 @@
                     
                     <?php else : ?>
                         <tr>
-                            <td colspan="3" class="text-center">No hay Registros</td>
+                            <td colspan="11" class="text-center">No hay Consultas esta Fecha</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -119,7 +148,7 @@
     
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Diagnosticar Paciente</h1>
@@ -127,26 +156,32 @@
                 </div>
 
                 <form action="./functions.php" method="POST" autocomplete="off" style="width:100%;">
-                    <input type="hidden" name="insertDiagnostico">
-                <div class="modal-body">
-
-                    <!-- Input para el id consulta -->
-                    <input type="hidden" name="id_consulta" id="inputIdConsulta" value="" class="form-control">
-                    <div class="mb-3">
-                        <label for="" class="form-label w-100 text-center fs-5">Diagnostico del Paciente</label>
-                        <textarea name="descripcion_diagnostico" class="form-control" id="descripcionDiagnostico" cols="30" rows="10"  required></textarea>
+                    <input type="hidden" id="inputDiagnosticoModal" name="insertDiagnostico">
+                    <?php if($response): ?> 
+                        <input type="hidden" name="fechaFiltro" value="<?=$fecha?>">
+                    <?php endif; ?> 
+                    <div class="modal-body">
+                        <div class="w-100 d-flex justify-content-around d-none" id="updateDiv">
+                            <button class="btn btn-updateModal" id="updateBtn">Actualizar</button>
+                            <button class="btn btn-outline-danger" id="deleteBtn">Borrar</button>
+                        </div>
+                        <!-- Input para el id consulta -->
+                        <input type="hidden" name="id_consulta" id="inputIdConsulta" value="" class="form-control">
+                        <div class="mb-3">
+                            <label for="" class="form-label w-100 text-center fs-5">Diagnostico del Paciente</label>
+                            <textarea name="descripcion_diagnostico" class="form-control" id="descripcionDiagnostico" cols="30" rows="10"  required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label w-100 text-center fs-5">Notas Adicionales</label>
+                            <textarea name="notas_adicionales" class="form-control" id="notasAdicionales" cols="30" rows="8" required></textarea>
+                        </div>
+                    
                     </div>
-                    <div class="mb-3">
-                        <label for="" class="form-label w-100 text-center fs-5">Notas Adicionales</label>
-                        <textarea name="notas_adicionales" class="form-control" id="notasAdicionales" cols="30" rows="8" required></textarea>
-                    </div>
-                
-                </div>
-                <div class="modal-footer d-flex justify-content-around border">
-                    <input type="submit" value="Diagnosticar" class="btn btn-outline-success" id="btnEnviarModal">
+                    <div class="modal-footer d-flex justify-content-around border">
+                        <input type="submit" value="Diagnosticar" class="btn btn-outline-success" id="btnEnviarModal">
 
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" >Cancelar</button>
-                </div>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                    </div>
                 </form>
                 
             </div>
