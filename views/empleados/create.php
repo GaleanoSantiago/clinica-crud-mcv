@@ -19,31 +19,39 @@
     <section>
         <div class="container d-flex flex-column align-items-center">
             <h1 class="text-center">Guardar Empleado</h1>
-            <?php if(isset($_GET["msg"])=="emplGuard"): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Empleado</strong> guardado con exito en la base de datos.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php else: ?>
-                <div class=""></div>
+            <?php if(isset($_GET["msg"])): ?>
+                <?php if($_GET["msg"] == "emplGuard"): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Empleado</strong> guardado con éxito en la base de datos.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> <?= nl2br(htmlspecialchars($_GET["msg"])) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
-            <form action="./functions.php" method="POST" autocomplete="off" id="formEmpleados">
+
+            <form action="./functions.php" method="POST" autocomplete="off" class="formEmpleadosValidacion" id="formEmpleados">
                 <!-- input controlado -->
                 <input type="hidden" name="insertEmpleado">
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre y Apellido</label>
-                            <input type="text" name="nombre" id="" class="form-control" required>
+                            <input type="text" name="nombre" class="form-control" required>
+                            <span id="nombreError" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label for="cuit" class="form-label">Cuil 
                                 <span class="text-secondary">(Solo numeros, sin guiones)</span>
                             </label>
                             <input type="number" name="cuit" id="cuitInput" class="form-control" required>
+                            <span id="cuitError" class="text-danger"></span>
                         </div>
                         <div class="mb-3 d-flex flex-column ">
-                            <label for="" class="form-label">Municipio</label>
+                            <label for="municipio" class="form-label">Municipio</label>
                             <select name="municipio" id="municipio" class="form-select">
                                 <?php foreach($municipios as $mun) :?>
                                     <option value="<?= $mun["id_municipio"]?>"><?= $mun["nombre_municipio"]?></option>
@@ -60,8 +68,9 @@
                             <span id="new_municipio_span" class="text-secondary d-none"></span>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Codigo Postal</label>
-                            <input type="number" name="cod_postal" id="" class="form-control" required>
+                            <label for="cod_postal" class="form-label">Codigo Postal</label>
+                            <input type="number" name="cod_postal" class="form-control" required>
+                            <span id="codPostalError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-sm-12">
@@ -78,14 +87,17 @@
                         <div class="mb-3">
                             <label for="dni" class="form-label">DNI</label>
                             <input type="number" name="dni" id="dniInput" class="form-control" readonly required>
+                            <span id="dniError" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label for="direccion" class="form-label">Direccion</label>
                             <input type="text" name="direccion" class="form-control" required>
+                            <span id="direccionError" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Correo Electronico</label>
-                            <input type="email" name="email" id="" class="form-control" required>
+                            <label for="email" class="form-label">Correo Electronico</label>
+                            <input type="email" name="email" class="form-control" required>
+                            <span id="emailError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-12">

@@ -55,11 +55,7 @@ function insertarPaciente(){
         $municipio = guardarMunicipio($new_municipio, $id_departamento);
     }
 
-    // Guardar registro en contacto y obtener id_contacto
-    // $id_contacto = limpiarcadena(guardarContacto($email));
-    // Guardar registro en direccion y obtener id_direccion
-    // $id_direccion = limpiarcadena(guardarDireccion($direccion, $cod_postal));
-
+    
     // Guardar registro en personas y obtener el id_persona
     $id_persona = guardarPersona($nombre, $cuit, $dni, $municipio, $direccion, $email, $cod_postal, $id_rol_persona);
 

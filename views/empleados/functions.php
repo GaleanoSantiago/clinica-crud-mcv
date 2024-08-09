@@ -26,6 +26,43 @@ if(isset($_REQUEST['insertEmpleado'])){
     }
 }
 
+function validarEmpleado($nombre, $cuit, $dni, $direccion, $cod_postal, $email) {
+    $errores = [];
+
+    // Validar nombre y apellido
+    if (!preg_match('/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{2,}$/', $nombre) || count(explode(' ', $nombre)) < 2) {
+        $errores[] = "Nombre y apellido no válidos.";
+    }
+
+    // Validar CUIL
+    if (!preg_match('/^\d{11}$/', $cuit)) {
+        $errores[] = "CUIL no válido.";
+    }
+
+    // Validar DNI
+    if (!preg_match('/^\d{8}$/', $dni)) {
+        $errores[] = "DNI no válido.";
+    }
+
+    // Validar dirección
+    if (empty($direccion)) {
+        $errores[] = "Dirección no válida.";
+    }
+
+    // Validar código postal
+    if (!preg_match('/^[A-Za-z0-9]{4,20}$/', $cod_postal)) {
+        $errores[] = "Código postal no válido.";
+    }
+
+    // Validar correo electrónico
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errores[] = "Correo electrónico no válido.";
+    }
+
+    return $errores;
+}
+
+
 function insertarEmpleado(){
     
     $nombre = limpiarcadena($_POST["nombre"]);
@@ -41,6 +78,14 @@ function insertarEmpleado(){
     $id_rol_persona = limpiarcadena(2);
     $id_vacacion = limpiarcadena(1);
 
+    // Validar los datos
+    $errores = validarEmpleado($nombre, $cuit, $dni, $direccion, $cod_postal, $email);
+    if (!empty($errores)) {
+        $mensajeError = implode(' - ', $errores);
+        header("Location:create.php?msg=" . urlencode($mensajeError));
+        exit;
+    }
+
     // Validar input del nuevo municipio dentro del modal
     if($_REQUEST["new_municipio"]!=""){
         
@@ -49,11 +94,6 @@ function insertarEmpleado(){
         $municipio = guardarMunicipio($new_municipio, $id_departamento);
     }
 
-    // Guardar registro en contacto y obtener id_contacto
-    // $id_contacto = limpiarcadena(guardarContacto($email));
-    // Guardar registro en direccion y obtener id_direccion
-    // $id_direccion = limpiarcadena(guardarDireccion($direccion, $cod_postal));
-    
     // Guardar registro en personas y obtener el id_persona
     $id_persona = guardarPersona($nombre, $cuit, $dni, $municipio, $direccion, $email, $cod_postal, $id_rol_persona);
 
